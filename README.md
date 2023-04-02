@@ -1,3 +1,3 @@
-# daa-problems
+# daa
 
-Design and Analysis of Algorithms (DAA) problems
+Design and Analysis of Algorithms (DAA)
