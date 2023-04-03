@@ -25,14 +25,12 @@ def solve(a: List[int]):
 
     for i in range(N - N//2):
         # accumulated sum of the last i elements of the list
-        print(i)
         if accu_sum <= 0:
             j = min(N//2, floor(accu_sum / a[N-1]))
 
             ranges[N - i - j] += 1
             ranges[N + 1 - i] -= 1
             
-            print(ranges)
         accu_sum -= a[i]
 
     return exist_k(ranges, N)
