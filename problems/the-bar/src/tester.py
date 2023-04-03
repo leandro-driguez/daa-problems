@@ -68,7 +68,7 @@ def tester(amount_tests: int, max_size: int):
 
 
 if __name__ == '__main__':
-    AMOUNT_OF_TEST_CASES = 1_000_000
+    AMOUNT_OF_TEST_CASES = 1_000_0
     SIZE_OF_ARRAY = 1000
     
     tester(

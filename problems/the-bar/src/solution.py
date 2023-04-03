@@ -21,7 +21,7 @@ def solve(a: List[int]):
 
     ranges = [0 for _ in range(N+2)]
     ranges[0] += 1
-    ranges[N - N//2] -= 1
+    ranges[N//2 + 1] -= 1
 
     for i in range(N - N//2):
         # accumulated sum of the last i elements of the list
@@ -31,6 +31,7 @@ def solve(a: List[int]):
             ranges[N - i - j] += 1
             ranges[N + 1 - i] -= 1
             
+            # print(ranges)
         accu_sum -= a[i]
 
     return exist_k(ranges, N)
