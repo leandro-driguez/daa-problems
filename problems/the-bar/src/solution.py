@@ -16,7 +16,7 @@ def solve(a: List[int]):
     if a[N-1] >= 0: 
         return N if sum(a) > 0 else -1
     
-    # accumulated sum of the hwole list
+    # accumulated sum of the whole list
     accu_sum = sum(a)
 
     ranges = [0 for _ in range(N+2)]
@@ -31,7 +31,6 @@ def solve(a: List[int]):
             ranges[N - i - j] += 1
             ranges[N + 1 - i] -= 1
             
-            # print(ranges)
         accu_sum -= a[i]
 
     return exist_k(ranges, N)
