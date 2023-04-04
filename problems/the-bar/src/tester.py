@@ -47,7 +47,7 @@ def check(a: List[int], k: int) -> int:
 
 def tester(amount_tests: int, max_size: int):
     
-    for _ in range(amount_tests):
+    for case in range(amount_tests):
         
         size = random.randint(1, max_size)
         
@@ -58,15 +58,19 @@ def tester(amount_tests: int, max_size: int):
         a += [random.randint(-2**32, 2**32)] * (size//2)
 
         k = solve(a)
-
+        
+        print("\033[1;37m" + f'Case {case}, verdict:')
         try:
             if k > 0:
                 assert check(a, k)
+                print( chr(27) + "[1;32m" + "Accepted")
             else:
                 assert solve2(a) == k == -1
+                print( chr(27) + "[1;32m" + "Accepted")
         except:
+            print(chr(27) + "[1;31m" +'Wrong Answer')
             print(f'k={k} is not solution of:\n{a}\n')
-
+        print("\033[0;37m" )
 
 if __name__ == '__main__':
     AMOUNT_OF_TEST_CASES = 1_000
