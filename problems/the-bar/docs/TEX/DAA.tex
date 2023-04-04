@@ -64,6 +64,8 @@
 %\newtheorem{prob}[theorem]{Problem}
 \newtheorem{question}[theorem]{Question}
 \numberwithin{equation}{section}
+\newcommand{\lqqd}{{\small $\blacksquare$}}
+\newcommand{\Proof}[2]{{\vspace{1em} $\emph{Demostración:}$ \textbf{#1} #2 \lqqd \vspace{1em}}}
 
 % Personalized Commands:
 \newcommand{\cc}{\mathbb{C}}
@@ -98,7 +100,7 @@
 \newcommand{\cl}[1]{\lceil #1\rceil}
 \newcommand{\ds}{\displaystyle}
 
-\keywords{Minkowski sum, power monoid, Puiseux monoid, atomicity, factorization theory}
+% \keywords{Minkowski sum, power monoid, Puiseux monoid, atomicity, factorization theory}
 
 %\subjclass[2010]{Primary: 13C05, 13A15, 13C13; Secondary: 13A15}
 
@@ -130,11 +132,6 @@
 \bigskip
 %%%%%%%%%%%%
 %%%%%%%%%%%%
-\section{Introduction}
-\label{sec:intro}
-
-TODO...
-
 
 \section{Enunciado del Problema}
 	
@@ -153,7 +150,7 @@ TODO...
 		
 		Si todas las sumas obtenidas resultan positivas con respecto a la media anterior el dueño concluir\'a que el bar marcha bien, de lo contrario, despide al administrador.
 		
-		El administrador lo contrata a usted para que lo ayude, como científico que se considera, a determinar que  valor de $k$ debe elegir el administrador para que el due\~no del bar le no lo despida.
+		El administrador lo contrata a usted para que lo ayude, como científico que se considera, a determinar que  valor de $k$ debe elegir el administrador para que el due\~no del bar no lo despida.
 	\end{prob}
 
 	\begin{prob}
@@ -176,9 +173,9 @@ TODO...
 		La soluci\'on dada en $\ref{navy_sol}$ es correcta.
 	\end{prop}
 
-	\begin{proof}
-		Esto se puede ver directamente del hecho de que exploramos todas las sumas posibles de $k$ valores consecutivos para cada valor de $k$ posible.		
-	\end{proof}
+        \Proof{}{
+        Esto se puede ver directamente del hecho de que exploramos todas las sumas posibles de $k$ valores consecutivos para cada valor de $k$ posible.		
+	}
 
 	\textbf{Complejidad temporal:} La complejidad temporal de esta soluci\'on es $\Theta(n^3)$. Tenemos $n$ valores posibles de $k$ a explorar, y para cada uno de ellos tenemos $n - k + 1$ subarrays de tama\~no $k$. Por tanto la cantidad de operaciones es del orden de 
 	\begin{align}
@@ -187,7 +184,7 @@ TODO...
 		\\ &= n^3(1/2 - 1/3) + n^2(1/2 - 1/6 - 1/2) + n(1/6 - 1/2) = \Theta(n^3).  
 	\end{align}
 
-	\textbf{Complejidad espacial:} Necesitaremos a lo sumo $2$ arreglos de taman\~no $n$ y algunos otros valores enteros, lo cual no es mas que $O(n)$ en complejidad espacial. 
+	\textbf{Complejidad espacial:} Necesitaremos a lo sumo $2$ arreglos de tama\~no $n$ y algunos otros valores enteros, lo cual no es m\'as que $O(n)$ en complejidad espacial. 
 
 	Sin embargo nos podemos quitar el factor $k$ de acumular el array de tama\~no $k$ si precalculamos en $O(n)$ la suma del prefijo de tama\~no $i$, para cada $1\le i \le n$. En este caso la soluci\'on ser\'ia entonces $\Theta(n^2)$.
 	
@@ -206,8 +203,8 @@ TODO...
 		La Soluci\'on \ref{sol_optima} es correcta. 
 	\end{teo}
 
-	\begin{proof}
-		Primero demostremos que si $k$ es soluci\'on, con $k \le \lfloor n/2 \rfloor $, entonces $2k$ tambi\'en. Supongamos por el contrario que existe un $1 \le i \le n - 2k + 1$ tal que $a_i + \dots + a_{i + 2k - 1} \le 0$. Entonces debe ocurrir que $a_i + \dots + a_{i + k - 1} \le 0$ o $a_{i + k} + \dots + a_i + 2k - 1 \le 0$, ya que de lo contrario la suma entera fuera positiva. Sin embargo ambas sumas est\'an compuestas por $k$ elementos consecutivos lo cual contradice que $k$ es soluci\'on. Por tanto si existe una soluci\'on entonces existe una tal que $k > \lfloor n/2 \rfloor$.
+        \Proof{}{
+		Primero demostremos que si $k$ es soluci\'on, con $k \le \lfloor n/2 \rfloor $, entonces $2k$ tambi\'en. Supongamos por el contrario que existe un $1 \le i \le n - 2k + 1$ tal que $a_i + \dots + a_{i + 2k - 1} \le 0$. Entonces debe ocurrir que $a_i + \dots + a_{i + k - 1} \le 0$ o $a_{i + k} + \dots + a_{i + 2k - 1} \le 0$, ya que de lo contrario la suma entera fuera positiva. Sin embargo ambas sumas est\'an compuestas por $k$ elementos consecutivos lo cual contradice que $k$ es soluci\'on. Por tanto si existe una soluci\'on entonces existe una tal que $k > \lfloor n/2 \rfloor$.
 		
 		Veamos que si $a_n \ge 0$ entonces existe una soluci\'on si y solo si $s_1 := a_1 + \dots + s_n > 0$. La implicaci\'on reversa es evidente. Supongamos entonces que existe una soluci\'on $k$. Entonces la suma $a_1 + a_2 + \dots + a_k > 0$. Dado que por el resultado anterior podemos asumir que $k > \lfloor n/2 \rfloor$, entonces $a_{k + 1} = a_{k + 2} = \dots = a_n \ge 0$. Por tanto $a_1 + a_2 + \dots + a_n = (a_1 + a_2 +\dots + a_k) + a_{k+1} + a_{k + 2} + \dots + a_n > 0 + (n - k)a_n \ge 0$, lo cual concluye nuestra demostraci\'on para este caso.
 		
@@ -221,7 +218,7 @@ TODO...
 		\end{align*}
 		 y $r_i = (n - i + 1)$, de donde obtenemos $l_i \le k \le r_i$. Podemos decir entonces que este valor de $k$ fue correctamente descartado.
 		
-		Solo resta demostrar que si existe un valor de $k > \lfloor n/2 \rfloor$ que es soluci\'on, entonces este valor no es descartado por el algoritmo .Supongamos por el contrario que existe un $i$ tal que $l_i \le k \le r_i$. Veamos primero  que $i + l_i = i + n - i  + 1 - \min( \lfloor s_i/a_n \rfloor, \lfloor n/2 \rfloor) \ge n + 1 - \lfloor n/2 \rfloor > \lfloor n/2 \rfloor$ y por tanto $a_{i + l} = a_{i + l + 1} = \dots = a_n$.  Tenemos entonces que
+		Solo resta demostrar que si existe un valor de $k > \lfloor n/2 \rfloor$ que es soluci\'on, entonces este valor no es descartado por el algoritmo. Supongamos por el contrario que existe un $i$ tal que $l_i \le k \le r_i$. Veamos primero  que $i + l_i = i + n - i  + 1 - \min( \lfloor s_i/a_n \rfloor, \lfloor n/2 \rfloor) \ge n + 1 - \lfloor n/2 \rfloor > \lfloor n/2 \rfloor$ y por tanto $a_{i + l} = a_{i + l + 1} = \dots = a_n$.  Tenemos entonces que
 		 \begin{align*}
 		 a_i + a_{i + 1} + \dots + a_{ i + k - 1} =  s_i - (a_{i + k} + \dots + a_n) 
 		 &\le s_i - (a_{i + l_i} + \dots + a_n) 
@@ -232,7 +229,7 @@ TODO...
 		 \le 0, 
 		 \end{align*}
 	 
-	de donde arribamos a una contradicci\'on, ya que existe un subarrray de tama\~no $k$ de suma no positiva.
+	de donde arribamos a una contradicci\'on, ya que existe un subarray de tama\~no $k$ de suma no positiva.
  		
  		
  		%		 \begin{align*}
@@ -245,7 +242,7 @@ TODO...
  			%		 \end{align*}
  		
  		
- 	\end{proof}
+ 	}
  		
 		 \textbf{Complejidad temporal:}
 		 
@@ -253,7 +250,7 @@ TODO...
 		 
 		 Sean $l_i$ y $r_i$ tales que en la iteraci\'on $i$ se determin\'o que debemos descartar como posibles valores de $k$ todos los enteros entre $l_i$ y $r_i$. Entonces creamos un array de tama\~no $n + 1$, inicialmente con todos los valores iguales a $0$. Luego por cada $i$, marcamos la posici\'on $l_i$ del array con valor $1$, y la posici\'on $r_i$ con valor $-1$. Luego pasamos acumulando el array desde la posici\'on $n/2$ hasta la $n$ y si en alg\'un momento la suma acumulada es $0$, entonces esa posici\'on corresponde a un valor que no fue descartado. Note que esto es similar al conocido \emph{factor de balance}. Note que en cada iteraci\'on $i$ se hacen un n\'umero constante de operaciones, lo cual representa una complejidad total de $\Theta(n)$ y luego pasar por el array del factor de balance es $\Theta(n)$ tambi\'en. Finalmente la complejidad temporal del algoritmo es $\Theta(n)$.
 		 
-		 \textbf{Complejidad espacial:} Necesitaremos a lo sumo $3$ arreglos de taman\~no $n$ y algunos otros valores enteros, lo cual no es mas que $O(n)$ en complejidad espacial. 
+		 \textbf{Complejidad espacial:} Necesitaremos a lo sumo $3$ arreglos de tama\~no $n$ y algunos otros valores enteros, lo cual no es m\'as que $O(n)$ en complejidad espacial. 
 		 
 		 
 		 \medskip
@@ -263,9 +260,9 @@ TODO...
 		 	La complejidad de la Soluci\'on \ref{sol_optima} es \'optima.
 		 \end{teo}
 		 
-		 \begin{proof}
-		 	Para esto demostramos que para cualquier algoritmo de soluci\'on del problema, se debe realizar al menos una operaci\'on (aunque sea de lectura) con cada uno de los $n$ elementos. Suponga por el contrario que existe un algoritmo soluci\'on que ignora a alg\'un elemento de la lista, osea que puede dar una respuesta sin conocer el valor de una determinada posici\'on del array. Supongamos que la respuesta del algoritmo es $-1$ para una entrada determinada donde ignora el n\'umero en la posici\'on $i$. Esto significa que sin importar el valor de $a_i$ la soluci\'on seguir\'a siendo $-1$. Sin embargo, si $a_i > \big| \sum_{j \neq i} a_j \big|$, entonces $k = n$ es claramente una soluci\'on, lo cual es una contradicci\'on. Por tanto el algoritmo nunca podr\'a determinar cuando la soluci\'on es $-1$ sin analizar a todos los elementos del array, por tanto cualquier algoritmo que resuelva el problema tiene complejidad $\Omega(n)$, y por tanto la Soluci\'on \ref{sol_optima} es \'optima.
-		 \end{proof}
+		 \Proof{}{
+		 	Para esto demostramos que para cualquier algoritmo de soluci\'on del problema, se debe realizar al menos una operaci\'on (aunque sea de lectura) con cada uno de los primeros $\lceil n / 2 \rceil$ elementos. Suponga por el contrario que existe un algoritmo soluci\'on que ignora a alg\'un elemento de los primeros $\lceil n / 2 \rceil $ de la lista lista, o sea que puede dar una respuesta sin conocer el valor de una determinada posici\'on del array. Supongamos que la respuesta del algoritmo es $-1$ para una entrada determinada donde ignora el n\'umero en la posici\'on $i$. Esto significa que sin importar el valor de $a_i$ la soluci\'on seguir\'a siendo $-1$. Sin embargo, si $a_i > \big| \sum_{j \neq i} a_j \big|$, entonces $k = n$ es claramente una soluci\'on, lo cual es una contradicci\'on. Por tanto el algoritmo nunca podr\'a determinar cuando la soluci\'on es $-1$ sin analizar los primeros $ \lceil n/2 \rceil $ elementos del array, por tanto cualquier algoritmo que resuelva el problema tiene complejidad $\Omega(n)$, y por tanto la Soluci\'on \ref{sol_optima} es \'optima.
+		 }
 		 
 	
 \medskip
