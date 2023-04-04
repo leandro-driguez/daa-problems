@@ -1,6 +1,7 @@
 from typing import List
 from math import floor
 
+# check if there exists some item that have not been discarded
 def exist_k(ranges: List[int], N : int) :
     oPar = 0
     for k in range(0, N + 1):
@@ -15,14 +16,11 @@ def solve(a: List[int]):
 
     if a[N-1] >= 0: 
         return N if sum(a) > 0 else -1
-<<<<<<< HEAD
-
-=======
     
->>>>>>> 9f179a0b3b5099f958986ddb648bd92df42cc01f
     # accumulated sum of the whole list
     accu_sum = sum(a)
 
+    # array of ranges to carry the balance factor
     ranges = [0 for _ in range(N+2)]
     ranges[0] += 1
     ranges[N//2 + 1] -= 1
@@ -33,11 +31,7 @@ def solve(a: List[int]):
             j = min(N//2, floor(accu_sum / a[N-1]))
             ranges[N - i - j] += 1
             ranges[N + 1 - i] -= 1
-<<<<<<< HEAD
-
-=======
             
->>>>>>> 9f179a0b3b5099f958986ddb648bd92df42cc01f
         accu_sum -= a[i]
 
     return exist_k(ranges, N)
