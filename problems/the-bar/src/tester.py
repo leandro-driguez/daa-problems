@@ -1,3 +1,4 @@
+from logging import exception
 from typing import List
 from solution import solve
 import random
@@ -32,7 +33,6 @@ def check(a: List[int], k: int) -> int:
     accum_sum = [0 for _ in range(N+1)]
     for i, item in enumerate(a):
         accum_sum[i+1] = item + accum_sum[i]
-
     # check if any subarray of size K, has non-positive sum
     l = 0; r = k
     while r <= N:
@@ -40,9 +40,9 @@ def check(a: List[int], k: int) -> int:
             break
         l += 1; r += 1
     else:
-        return k
+        return True
 
-    return -1
+    return False
 
 
 def tester(amount_tests: int, max_size: int):
@@ -53,28 +53,25 @@ def tester(amount_tests: int, max_size: int):
         
         a = []
         for _ in range(size - size//2):
-            a.append(random.randint(-2**32, 2**32))
+            a.append(random.randint(-1e9, 1e9))
 
-        a += [random.randint(-2**32, 2**32)] * (size//2)
+        a += [random.randint(-1e9, 1e9)] * (size//2)
 
         k = solve(a)
         
         print("\033[1;37m" + f'Case {case}, verdict:')
-        try:
-            if k > 0:
-                assert check(a, k)
-                print( chr(27) + "[1;32m" + "Accepted")
-            else:
-                assert solve2(a) == k == -1
-                print( chr(27) + "[1;32m" + "Accepted")
-        except:
+        if k > 0 and check(a, k):
+            print( chr(27) + "[1;32m" + "Accepted")
+        elif solve2(a) == k == -1:
+            print( chr(27) + "[1;32m" + "Accepted")
+        else:
             print(chr(27) + "[1;31m" +'Wrong Answer')
-            print(f'k={k} is not solution of:\n{a}\n')
+            print(f'k={k} is not solution for the given list.\n')
         print("\033[0;37m" )
 
 if __name__ == '__main__':
-    AMOUNT_OF_TEST_CASES = 1_000
-    SIZE_OF_ARRAY = 1_000
+    AMOUNT_OF_TEST_CASES = 1000
+    SIZE_OF_ARRAY = 1000
 
     tester(
         amount_tests=AMOUNT_OF_TEST_CASES,
