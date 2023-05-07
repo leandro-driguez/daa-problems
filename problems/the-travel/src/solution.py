@@ -1,8 +1,7 @@
-from cmath import log
 import heapq
-from queue import PriorityQueue
 from typing import List, Tuple
-from math import floor, inf, log2
+from math import inf, log2
+
 
 def floyd_warshall(graph):
     n = len(graph)
@@ -21,13 +20,16 @@ def floyd_warshall(graph):
                 dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
                 
     return dist
-    
+
+
 def Dijkstra(n, graph, cool_nodes):
     d = [0 for _ in range(n)]
+
     for node in cool_nodes:
         d[node] = dijkstra(n, graph, node)
-        
+
     return d
+
 
 def dijkstra(n, graph, start):
     distances = [inf for _ in range(n)]
@@ -48,8 +50,7 @@ def dijkstra(n, graph, start):
                 heapq.heappush(pq, (distance, neighbor))
                 
     return distances
-            
-    
+
 
 def solve(n : int, edges: List[Tuple[int, int, int]], Q : List[Tuple[int, int, int]]):
 
@@ -64,10 +65,11 @@ def solve(n : int, edges: List[Tuple[int, int, int]], Q : List[Tuple[int, int, i
         cool_nodes.add(q[0])
         cool_nodes.add(q[1])
     
-    if m * log2(m) < n**2:
+    if m > 0 and m * log2(m) < n**2:
         d = Dijkstra(n, G, cool_nodes)
     else:
         d = floyd_warshall(G)
+
     ans = 0
     for x,y,w in edges:
         for u,v,l in Q:
@@ -76,16 +78,17 @@ def solve(n : int, edges: List[Tuple[int, int, int]], Q : List[Tuple[int, int, i
                 break    
             
     return ans
-        
-n = 7
-edges = [(0,1,9),
-         (4,1,6),
-         (0,3,33),
-         (0,4,12),
-         (5,2,8),
-         (6,1,5),
-         (0,5,7)
-         ]   
 
-Q = [(0, 2, 80)]
-print(solve(n,edges,Q))
+if __name__ == '__main__':
+    n = 7
+
+    edges = [(0,1,9),
+            (4,1,6),
+            (0,3,33),
+            (0,4,12),
+            (5,2,8),
+            (6,1,5),
+            (0,5,7)]   
+
+    Q = [(0, 2, 80)]
+    print(solve(n,edges,Q))

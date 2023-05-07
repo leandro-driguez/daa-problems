@@ -1,41 +1,49 @@
-from logging import exception
 from typing import List, Tuple
 from solution import solve
 import random
 
+def backtrack(graph, path, u, v, l):
+    useful_edges = []
+
+    if u == v and l > 0:
+        useful_edges = path
+    
+    if l <= 0:
+        if u == v and l == 0:
+            return useful_edges
+        return []
+
+    for z, w in graph[u]:
+        useful_edges += backtrack(graph, path + [(u, z)], z, v, l-w)
+
+    return useful_edges
 
 # brute force
-def solve2(n : int, edges : List[Tuple[int,int,int]], Q : List[Tuple[int,int,int]]):
+def solve2(n : int, edges : List[Tuple[int,int,int]], Q : List[Tuple[int,int,int]]):    
+    useful_edges = set()
     
-    #TODO
-    
-    pass
+    G = [[] for _ in range(n)]
+    for x,y,w in edges:
+        G[x].append((y, w))
+        G[y].append((x, w))
 
+    for u, v, l in Q:
+        for u1, v1 in backtrack(G, [], u, v, l):
+            if not useful_edges.__contains__((u1, v1)) and \
+                not useful_edges.__contains__((v1, u1)):
+                useful_edges.add((u1, v1))
 
-def check(a: List[int], k: int) -> int:
-    N = len(a)
+    return useful_edges
 
-    # precalculation of the array with the accumulated sum
-    accum_sum = [0 for _ in range(N+1)]
-    for i, item in enumerate(a):
-        accum_sum[i+1] = item + accum_sum[i]
-    # check if any subarray of size K, has non-positive sum
-    l = 0; r = k
-    while r <= N:
-        if accum_sum[r] - accum_sum[l] <= 0:
-            break
-        l += 1; r += 1
-    else:
-        return True
-
-    return False
 
 def random_graph(n, prob):
+    _edges = set()
     edges = []
     
     for i in range(n):
         for j in range(n):
-            if random.random() < prob:
+            if random.random() < prob and i != j and not _edges.__contains__((j,i)):
+                _edges.add((i,j))
                 edges.append((i,j, random.randint(0,500)))
                 
     return edges
@@ -51,20 +59,35 @@ def tester(amount_tests: int, max_nodes: int):
         Q = random_graph(n, 0.2) #TODO: adjust p value
 
         k1 = solve(n, edges, Q)
+        print('START TESTER')
+        print(f'EDGES: {edges}')
+        print(f'Q: {Q}')
         k2 = solve2(n ,edges, Q)
         
         print("\033[1;37m" + f'Case {case}, verdict:')
-        if k1 == k2:
-            print( chr(27) + "[1;32m" + "Accepted")
+        if k1 == len(k2):
+            print(chr(27) + "[1;32m" + "Accepted")
         else:
             print(chr(27) + "[1;31m" +'Wrong Answer')
+            print(f'ANSWER => sol: {k1} test: {len(k2)}')
+            print(f'TESTER: {k2}')
         print("\033[0;37m" )
 
-if __name__ == '__main__':
-    AMOUNT_OF_TEST_CASES = 10
-    MAX_NUMBER_OF_NODES = 1000
 
-    tester(
-        amount_tests=AMOUNT_OF_TEST_CASES,
-        max_nodes=MAX_NUMBER_OF_NODES
-    )
+if __name__ == '__main__':
+    # AMOUNT_OF_TEST_CASES = 10
+    # MAX_NUMBER_OF_NODES = 8
+
+    # tester(
+    #     amount_tests=AMOUNT_OF_TEST_CASES,
+    #     max_nodes=MAX_NUMBER_OF_NODES
+    # )
+
+    # EDGES = [(0, 2, 138), (0, 3, 291), (0, 4, 35), (1, 2, 128), (1, 4, 477), (3, 1, 94)]
+    # Q = [(1, 3, 310), (2, 0, 303), (3, 0, 194)]
+    
+    # # dead case
+    EDGES = [(1, 0, 338), (1, 2, 457), (1, 4, 41), (2, 0, 299), (2, 4, 20), (3, 1, 1), (3, 2, 461), (3, 6, 417), (5, 2, 168), (5, 3, 60), (6, 0, 228), (6, 5, 249)]
+    Q = [(1, 0, 326), (1, 2, 225), (3, 1, 295), (5, 2, 146), (6, 3, 422)]
+
+    print(solve2(7, EDGES, Q))
