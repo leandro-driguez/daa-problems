@@ -1,18 +1,21 @@
+from copy import copy
 from typing import List, Tuple
 from solution import solve
 import random
 
 def backtrack(graph, path, u, v, l):
-    useful_edges = []
+    useful_edges = set()
 
     if u == v and l >= 0:
-        useful_edges = path
+        useful_edges = set(copy(path))
+        # return useful_edges
 
     if l < 0:
-        return []
+        return set()
 
     for z, w in graph[u]:
-        useful_edges += backtrack(graph, path + [(u, z)], z, v, l-w)
+        for x,y in backtrack(graph, path + [(u, z)], z, v, l-w):
+            useful_edges.add((x,y))
 
     return useful_edges
 
@@ -76,10 +79,10 @@ if __name__ == '__main__':
     AMOUNT_OF_TEST_CASES = 10
     MAX_NUMBER_OF_NODES = 8
 
-    tester(
-        amount_tests=AMOUNT_OF_TEST_CASES,
-        max_nodes=MAX_NUMBER_OF_NODES
-    )
+    # tester(
+    #     amount_tests=AMOUNT_OF_TEST_CASES,
+    #     max_nodes=MAX_NUMBER_OF_NODES
+    # )
 
     # EDGES = [(0, 2, 138), (0, 3, 291), (0, 4, 35), (1, 2, 128), (1, 4, 477), (3, 1, 94)]
     # Q = [(1, 3, 310), (2, 0, 303), (3, 0, 194)]
