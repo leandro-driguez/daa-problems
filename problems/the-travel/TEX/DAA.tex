@@ -181,15 +181,16 @@ A continuaci\'on presentamos una redefinici\'on del problema en t\'erminos m\'as
 \section{Soluci\'on Propuesta}
 	
 	\begin{sol}\label{sol_optima_travel} Sea $d \colon V \times V \rightarrow \rr^+$ la funci\'on que a cada par de nodos del grado hace corresponder la longitud del caminos de costo m\'inimo que los conecta. La misma puede ser hallada usando el conocido algoritmo de Floyd-Warshall, o haciendo el algoritmo de Dijkstra desde cada nodo. Luego para cada arista $\edge{x,y}$ del grafo, si existe en $Q$ una tupla $(u,v,l)$ tal que
-	\begin{align}\label{condition}
-		d(u,x) + d(y,v) + w \left(\edge{x, y} \right) \le l,
-	\end{align}
-	entonces dicha arista puede ser contada como \'util. Para determinar esto podemos para cada arista comprobar cada una de las tuplas de $Q$. En caso de que ninguna satisfaga la desigualdad \eqref{condition}, dicha arista no ser\'a \'util.
+		\begin{align}\label{condition}
+			d(u,x) + d(y,v) + w \left(\edge{x, y} \right) \le l o \\
+		\label{condition2}	d(u,y) + d(x,v) + w \left(\edge{x, y} \right) \le l,
+		\end{align}
+		entonces dicha arista puede ser contada como \'util. Para determinar esto podemos para cada arista comprobar cada una de las tuplas de $Q$. En caso de que ninguna satisfaga la desigualdad \eqref{condition}, dicha arista no ser\'a \'util.
 	\end{sol}
 
 \textbf{Complejidad temporal:}
 
- La complejidad temporal de la soluci\'on es $O\left(mq + \min\big(\min(q,n) m\log(m), n^3\big) \right)$. El sumando $mq$ sale del hecho de que debemos comprobar para cada arista, cada una de las tuplas de $Q$ en la condici\'on \eqref{condition}. El otro sumando es el costo de calcular la funci\'on $d$. En caso de que $m \log(m) = O(n^2)$ podemos usar la variante de hacer Dijktsra desde cada nodo, de donde sale la complejidad $O(nm\log(m))$ dado que son $n$ nodos y la complejidad de Dijkstra es $O(m\log(m))$ (remplazamos el factor $n$ por $\min(n, q)$, dado que solo nos interesan los caminos de longitud m\'inima partiendo de los nodos que aparecen en algunas de las $q$ tuplas). En otro caso podemos usar Floyd-Warshall que tiene una complejidad total de $O(n^3)$.
+ La complejidad temporal de la soluci\'on es $O\left(mq + \min\big(\min(q,n) m\log(m), n^3\big) \right)$. El sumando $mq$ sale del hecho de que debemos comprobar para cada arista, cada una de las tuplas de $Q$ en las condiciones \eqref{condition} y \eqref{condition2}. El otro sumando es el costo de calcular la funci\'on $d$. En caso de que $m \log(m) = O(n^2)$ podemos usar la variante de hacer Dijktsra desde cada nodo, de donde sale la complejidad $O(nm\log(m))$ dado que son $n$ nodos y la complejidad de Dijkstra es $O(m\log(m))$ (remplazamos el factor $n$ por $\min(n, q)$, dado que solo nos interesan los caminos de longitud m\'inima partiendo de los nodos que aparecen en algunas de las $q$ tuplas). En otro caso podemos usar Floyd-Warshall que tiene una complejidad total de $O(n^3)$.
 
 
 \textbf{Complejidad espacial:}
@@ -199,9 +200,9 @@ A continuaci\'on presentamos una redefinici\'on del problema en t\'erminos m\'as
 	La Soluci\'on \ref{sol_optima_travel} es correcta.
 \end{prop}
 	\Proof{}{
-		Comencemos por observar que si una arista $\edge{x,y}$ satisface la desigualdad \eqref{condition} para alguna tupla $(u,v,l) \in Q$, entonces dicha arista es \'util. Esto se puede ver f\'acilmente del hecho de que el camino $u\rightsquigarrow x \rightarrow y\rightsquigarrow v$ tiene longitud $d(u,x) + d(y,v) + w\big( \edge{x,y} \big)$. Por tanto a partir de la desigualdad \eqref{condition} la longitud de ese camino es menor que $l$, de donde tenemos que es \'util para la tupla $(u,v,l)$ y as\'i la arista $(x,y)$ tambi\'en lo ser\'a.
-		
-		Supongamos ahora que existe una arista $\edge{x, y}$ que es \'util pero que no fue encontrada por el algoritmo. Sea $(u, v, l)$ la tupla que hace \'util a dicha arista. Por tanto, existe un camino $p := u \rightsquigarrow x \rightarrow y \rightsquigarrow v$ tal que la longitud del mismo es a lo sumo $l$. Sea $w_1$ la longitud del fragmento de $p$ que va de $u$ a $x$ y $w_2$ la longitud del fragmento de $p$ que va de $y$ a $v$. Por definici\'on de $d$, se cumple que $d(u,x) \le w_1$ y $d(y, v) \le w_2$. Entonces $d(u,x) + w(\edge{x, y}) + d(y , v) \le w_1 + w(\edge{x,y}) + w_2 = |p| \le l$. Por tanto la arista $\edge{x, y}$ satisface la desigualdad \eqref{condition} para la tupla $(u,v,l)$, lo cual contradice que el algoritmo no la encontr\'o. Podemos concluir que una arista es \'util si y solo si la soluci\'on propuesta la encuentra.
+		Comencemos por observar que si una arista $\edge{x,y}$ satisface la desigualdad \eqref{condition} para alguna tupla $(u,v,l) \in Q$, entonces dicha arista es \'util. Esto se puede ver f\'acilmente del hecho de que el camino $u\rightsquigarrow x \rightarrow y\rightsquigarrow v$ tiene longitud $d(u,x) + d(y,v) + w\big( \edge{x,y} \big)$. Por tanto a partir de la desigualdad \eqref{condition} la longitud de ese camino es menor que $l$, de donde tenemos que es \'util para la tupla $(u,v,l)$ y as\'i la arista $(x,y)$ tambi\'en lo ser\'a. Para el caso en que satisfaga $\eqref{condition2}$ la demostraci\'on es an\'aloga.
+	
+	Supongamos ahora que existe una arista $\edge{x, y}$ que es \'util pero que no fue encontrada por el algoritmo. Sea $(u, v, l)$ la tupla que hace \'util a dicha arista. Por tanto, existe un camino $p_1 := u \rightsquigarrow x \rightarrow y \rightsquigarrow v$ con longitud a lo sumo $l$ o un camino $p_2 := u \rightsquigarrow y \rightarrow x \rightsquigarrow v$ con longitud a lo sumo $l$. Supongamos sin p\'erdida de generalidad que existe $p_1$. Sea $w_1$ la longitud del fragmento de $p$ que va de $u$ a $x$ y $w_2$ la longitud del fragmento de $p$ que va de $y$ a $v$. Por definici\'on de $d$, se cumple que $d(u,x) \le w_1$ y $d(y, v) \le w_2$. Entonces $d(u,x) + w(\edge{x, y}) + d(y , v) \le w_1 + w(\edge{x,y}) + w_2 = |p| \le l$. Por tanto la arista $\edge{x, y}$ satisface la desigualdad \eqref{condition} para la tupla $(u,v,l)$, lo cual contradice que el algoritmo no la encontr\'o. Podemos concluir que una arista es \'util si y solo si la soluci\'on propuesta la encuentra.
 		
 	}
 
