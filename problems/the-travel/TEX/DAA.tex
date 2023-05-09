@@ -160,6 +160,24 @@ A continuaci\'on presentamos una redefinici\'on del problema en t\'erminos m\'as
 		Se tiene un grafo no dirigido y ponderado, con funci\'on de ponderaci\'on $w$, de $n$ nodos y $m$ aristas. Se tiene un conjunto $Q$ conformado por $q$ tuplas de la forma $(u,v,l)$, donde $u$ y $v$ son nodos del grafo, y $l$ es un entero no negativo. Se dice que un camino entre $u$ y $v$ de longitud $l$ es \'util si la tupla $(u,v,l') \in Q$ para alg\'un $l' \ge l$. Una arista $e$ es \'util si pertenece a alg\'un camino \'util. Encuentre el n\'umero de aristas \'utiles del grafo.
 	\end{prob}
 
+\section{Solución inocente}
+    Como podemos ver, una vez formulado el problema, podemos encontrar una solución simplemente explorando el espacio de todos los posibles caminos entre cada par de vértices $u$ y $v$ tal que $(u, v, l) \in Q$ y tomando el conjunto de las aristas que pertenezcan a aquellos caminos cuyo costo sea menor o igual que $l$. Veremos a continuación dicha solución.
+    
+    \begin{sol}\label{sol_backtracking_travel}
+        Dado una tupla de la forma $(u, v, l) \in Q$, se toma una arista $\edge{u, x}$ y se une con todas las aristas que existen desde cualquier camino de $x$ a $v$ con costo menor o igual a $l - w(\edge{u,x})$, si existe dicho camino. 
+
+        Los casos de parada serían cuando $l < 0$, en tal caso ninguna de las aristas que fueron obtenidas hasta llegar al nodo actual se toman como válidas; y cuando se llega al nodo que se quería con un costo $l >= 0$, en este caso todas las aristas que se utilizaron para llegar hasta este vértice, se consideran como útiles. 
+    \end{sol} 
+
+    \begin{prop}
+	La Soluci\'on \ref{sol_backtracking_travel} es correcta.
+    \end{prop}
+
+    \Proof{}{
+        Supongamos que partiendo de $(u, v, l) \in Q$, luego de ejecutar el algoritmo se obtiene una arista $\edge{x,y}$ 
+        como parte del conjunto de aristas que se consideran útiles.
+    }
+
 \section{Soluci\'on Propuesta}
 	
 	\begin{sol}\label{sol_optima_travel} Sea $d \colon V \times V \rightarrow \rr^+$ la funci\'on que a cada par de nodos del grado hace corresponder la longitud del caminos de costo m\'inimo que los conecta. La misma puede ser hallada usando el conocido algoritmo de Floyd-Warshall, o haciendo el algoritmo de Dijkstra desde cada nodo. Luego para cada arista $\edge{x,y}$ del grafo, si existe en $Q$ una tupla $(u,v,l)$ tal que
@@ -209,17 +227,7 @@ A continuaci\'on presentamos una redefinici\'on del problema en t\'erminos m\'as
 
 \bigskip
 %%%%%%%%%%%%%%%
-%\begin{thebibliography}{20}
-	
-%	\bibitem{FT18} Y. Fan and S. Tringali: \emph{Power monoids: A bridge between factorization theory and arithmetic combinatorics}, J. Algebra \textbf{512} (2018) 252--294.
 
-	%	\bibitem{GGT19} A. Geroldinger, F. Gotti, and S. Tringali: \emph{On strongly primary monoids, with a focus on Puiseux monoids}, J. Algebra \textbf{567} (2021) 310--345. 
-
-%	\bibitem{GH06} A. Geroldinger and F. Halter-Koch: \emph{Non-unique Factorizations: Algebraic, Combinatorial and Analytic Theory}, Pure and Applied Mathematics Vol. 278, Chapman \& Hall/CRC, Boca Raton, 2006.
-
-	%	\bibitem{mR93} M. Roitman: \emph{Polynomial extensions of atomic domains}, J. Pure Appl. Algebra \textbf{87} (1993) 187--199.
-	
-%\end{thebibliography}
 
 
 \end{document}
