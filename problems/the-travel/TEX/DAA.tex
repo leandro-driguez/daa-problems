@@ -164,9 +164,9 @@ A continuaci\'on presentamos una redefinici\'on del problema en t\'erminos m\'as
     Como podemos ver, una vez formulado el problema, podemos encontrar una solución simplemente explorando el espacio de todos los posibles caminos entre cada par de vértices $u$ y $v$ tal que $(u, v, l) \in Q$ y tomando el conjunto de las aristas que pertenezcan a aquellos caminos cuyo costo sea menor o igual que $l$. Veremos a continuación dicha solución.
     
     \begin{sol}\label{sol_backtracking_travel}
-        Dado una tupla de la forma $(u, v, l) \in Q$, se toma una arista $\edge{u, x}$ y se une con todas las aristas que existen desde cualquier camino de $x$ a $v$ con costo menor o igual a $l - w(\edge{u,x})$, si existe dicho camino. 
-
-        Los casos de parada serían cuando $l < 0$, en tal caso ninguna de las aristas que fueron obtenidas hasta llegar al nodo actual se toman como válidas; y cuando se llega al nodo que se quería con un costo $l >= 0$, en este caso todas las aristas que se utilizaron para llegar hasta este vértice, se consideran como útiles. 
+        Por cada tupla de la forma $(u, v, l) \in Q$ exploramos todos los caminos que salen desde $u$ con distancia menor a $l$. Cada vez que uno de tales caminos termine en $v$ marcamos todas sus aristas como \'utiles.
+        
+         Para calcular los caminos que parten de $u$ y tienen distancia menor o igual que $l$, lo que hacemos es explorar cada una de las aristas $\edge{u, x}$ y resolver recursivamente el problema de explorar los caminos que parten de $x$ con costo menor o igual a $l - w(\edge{u,x})$. Es importante que si $p := u \rightsquigarrow y$ es la parte del camino explorada hasta un momento, en los caminos que se exploren desde $y$, las aristas $ a\rightarrow b$ que se visiten, no esten en $p$ en ese mismo sentido. En caso de que $l < 0$ terminamos la ejecuci\'on y en caso de que $y = u$ marcamos como \'utiles a todas las aristas del camino $p$ que ven\'iamos siguiendo (las aristas correspondietes a la pila de llamados recursivos).
     \end{sol} 
 
     \begin{prop}
@@ -174,8 +174,7 @@ A continuaci\'on presentamos una redefinici\'on del problema en t\'erminos m\'as
     \end{prop}
 
     \Proof{}{
-        Supongamos que partiendo de $(u, v, l) \in Q$, luego de ejecutar el algoritmo se obtiene una arista $\edge{x,y}$ 
-        como parte del conjunto de aristas que se consideran útiles.
+        Para demostrar la correctitud del algoritmo basta con demostrar que este termina, ya que lo que hace es explorar todos los posibles caminos \'utiles, y por tanto analizar todas las posibilidades para que una arista sea \'util, tal y como se requiere en el problema. Supongamos en busca de una contradicci\'on que el algoritmo no termina. Note que como la funci\'on de costo es no negativa, entonces la distancia del camino a hallar en cada llamado recursivo es menor o igual que la del llamado recursivo anterior. Como el algoritmo no termina, entonces tenemos un conjunto infinito de llamados recursivos para los cuales la longitud del camino a hallar es la misma. Sin embargo, para cada par de llamados recursivos consecutivos corresponde una arista del camino explorado hasta el momento. Pero cada arista puede ser usada a lo sumo dos veces seg\'un lo descrito en la soluci\'on (una vez en cada sentido) y existe un n\'umero finito de estas, lo cual contradice que el algoritmo no termina.
     }
 
 \section{Soluci\'on Propuesta}
