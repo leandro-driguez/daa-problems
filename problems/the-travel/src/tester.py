@@ -21,7 +21,7 @@ def backtrack(graph, path, u, v, l):
 
     return useful_edges
 
-# brute force
+# naive solution
 def solve2(n : int, edges : List[Tuple[int,int,int]], Q : List[Tuple[int,int,int]]):    
     useful_edges = set()
     
@@ -60,9 +60,9 @@ def tester(amount_tests: int, max_nodes: int):
         
         n = random.randint(1, max_nodes)
         
-        edges = random_graph(n, 0.5) #TODO: adjust p value
+        edges = random_graph(n, 0.5) 
         
-        Q = random_graph(n, 0.2) #TODO: adjust p value
+        Q = random_graph(n, 0.2) 
 
         k1 = solve(n, edges, Q)
         print('START TESTER')
@@ -89,16 +89,5 @@ if __name__ == '__main__':
         max_nodes=MAX_NUMBER_OF_NODES
     )
 
-    # EDGES = [(0, 2, 138), (0, 3, 291), (0, 4, 35), (1, 2, 128), (1, 4, 477), (3, 1, 94)]
-    # Q = [(1, 3, 310), (2, 0, 303), (3, 0, 194)]
-
-    # # dead case
-    # EDGES = [(1, 0, 338), (1, 2, 457), (1, 4, 41), (2, 0, 299), (2, 4, 20), (3, 1, 1), (3, 2, 461), (3, 6, 417), (5, 2, 168), (5, 3, 60), (6, 0, 228), (6, 5, 249)]
-    # Q = [(1, 0, 326), (1, 2, 225), (3, 1, 295), (5, 2, 146), (6, 3, 422)]
-
-    # EDGES = [(0, 2, 91), (1, 2, 288), (1, 4, 67), (2, 3, 9), (2, 4, 46), (3, 0, 85), (4, 0, 189), (4, 3, 67)]
-    # Q = [(1, 3, 217), (2, 3, 21), (4, 2, 359)]
-
-    # print(solve2(5, EDGES, Q))
 
  
