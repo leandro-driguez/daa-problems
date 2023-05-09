@@ -5,21 +5,23 @@ import random
 
         
         
-def backtrack(graph, path, u, v, l):
-    useful_edges = set()
+def backtrack(graph, path, u, v, l, useful_edges):
+
+    ans = False
 
     if u == v and l >= 0:
-        useful_edges = set(copy(path))
+        ans = True
 
     if l < 0:
-        return set()
+        return False
 
     for z, w in graph[u]:
         if (u,z) not in path:
-            for x,y in backtrack(graph, path + [(u, z)], z, v, l-w):
-                useful_edges.add((x,y))
+            if backtrack(graph, path + [(u, z)], z, v, l-w, useful_edges):
+                useful_edges.add((u,z))
+                ans = True
 
-    return useful_edges
+    return ans
 
 # naive solution
 def solve2(n : int, edges : List[Tuple[int,int,int]], Q : List[Tuple[int,int,int]]):    
@@ -31,7 +33,9 @@ def solve2(n : int, edges : List[Tuple[int,int,int]], Q : List[Tuple[int,int,int
         G[y].append((x, w))
 
     for u, v, l in Q:
-        for u1, v1 in backtrack(G, [], u, v, l):
+        s = set()
+        backtrack(G, [], u, v, l, s)
+        for u1, v1 in s:
             if not useful_edges.__contains__((u1, v1)) and \
                 not useful_edges.__contains__((v1, u1)):
                 useful_edges.add((u1, v1))
