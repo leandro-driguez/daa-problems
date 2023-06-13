@@ -1,5 +1,5 @@
 
-# El viaje
+# The travel
 
 Kenny y Jesús quieren hacer un viaje por carretera de La Habana a Guantánamo. Objetivo: Fiesta. Obstáculo: Precio de la gasolina. Incluyendo el punto de salida (habana) y de destino (guantánamo), hay un total de $n$ puntos a los que es posible visitar, unidos por $m$ carreteras cuyos costos de gasolina se cononcen. Los compañeros comienzan entonces a planificar su viaje.
 
