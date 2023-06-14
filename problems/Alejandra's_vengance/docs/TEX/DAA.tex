@@ -168,24 +168,48 @@ En un grafo ponderado definimos la longitud de un camino como la suma de los pes
 	
 	Ahora para demostrar que el problema de decisi\'on en cuesti\'on es NP completo reduciremos el problema de $3$-coloraci\'on a nuestro problema. Sea $G = (V,E)$ un grafo que se recibe como entrada al problema de $3$-coloraci\'on. Del mismo queremos determinar si sus v\'ertices se pueden dividir en $3$ conjuntos disjuntos tal que no existen aristas entre los v\'ertices de un mismo conjunto. Para proceder a demostrar que este problema se puede reducir al problema de tener determinar si un grafo posee subgrafos c\'ubicos, transformemos la entrada $G$ del problema original en otra entrada $G'$ para el segundo problema. 
 	
-	El conjunto $V'$ estar\'a formado de la siguiente forma:
+	Denotemos $d_i = \deg(v_i)$ por cada nodo $v_i \in V$. El conjunto $V'$ estar\'a formado de la siguiente forma:
 	\begin{itemize}
-		\item Por cada $v_i \in V$ tendremos $15$ v\'ertices $v_{ij}^h$ en $V'$, para cada $1 \le j \le 5$ y $1 \le h \le 3$
-		\item Por cada arista $e_i \in E$ tendremos los  v\'ertices $a_i^h$ en $V'$, para cada $1 \le h \le 3$
-		\item Por cada v\'ertice $x_i \in V$ tendremos otro v\'ertice $x_i' \in V'$
+		\item Por cada $v_i \in V$ a\~nadimos el v\'ertice $v_{ij}^h$ en $V'$, para cada $1 \le j \le 3d_i + 2$ y $1 \le h \le 3$.
+		\item Por cada arista $e_i \in E$ tendremos los  v\'ertices $a_i^h$ en $V'$, para cada $1 \le h \le 3$.
+		\item Por cada v\'ertice $v_i \in V$ tendremos otro v\'ertice $x_i \in V'$.
 		\item $n$ v\'ertices especiales $s_i$.
 	\end{itemize}
 
 	El conjunto de aristas $E'$ estar\'a definido como sigue:
 	\begin{itemize}
-		\item Por cada $1 \le i \le n$ tendremos una arista entre los v\'ertices $v_{ij}^h$ y $v_{ij+1}^h$ (donde se toma el segundo sub\'indice m\'odulo $5$), para cada $1 \le h \le 3$. Como podemos ver se formar\'an as\'i unos ciclos de tama\~no $5$ a los que denotaremos por $C_i^h$
-		\item Por cada arista $e_i$ que conecta a $v_x$ y $v_y$ en $G$, entonces por cada  $1 \le h \le 3$ conectaremos a $a_i^h$ con cada uno de los nodos $v_{xj}^h$ y $v_{yj}^h$, para cada $1 \le j \le 3$
-		\item Por cada v\'ertice $x_i \in V$ conectamos el v\'ertice $x_i' \in V'$, con $v_{i4}^h$ y  $v_{i5}^h$, para cada $1 \le h \le 3$
-		\item Cada v\'ertice $s_i$ lo conectamos con $s_{i+1}$ formando as\'i un ciclo que denotaremos por $S$
-		\item Por cada $1 \le i \le n$ conectamos $x_i'$ con $s_i$. 
+		\item Por cada $1 \le i \le n$ tendremos una arista entre los v\'ertices $v_{ij}^h$ y $v_{ij+1}^h$ (donde se toma el segundo sub\'indice m\'odulo $3d_i + 2$), para cada $1 \le h \le 3$. Como podemos ver se formar\'an as\'i $3n$ ciclos de tama\~no $3d_i + 2$ a los que denotaremos por $C_i^h$.
+		\item Sean $e_{\rho_1}, e_{\rho_2}, \dots , e_{\rho_{d_i}}$ las aristas incidentes en el nodo $v_i$,  entonces por cada  $1 \le h \le 3$ conectaremos los nodos $v_{i,3j}^h$, $v_{i,3j + 1}^h$ y $v_{i,3j + 2}^h$ con el nodo  $a_{\rho_j}^h$, para cada $1 \le j \le d_i$.
+		\item Por cada v\'ertice $v_i \in V$ conectamos el v\'ertice $x_i \in V'$, con $v_{i,3d_i + 1}^h$ y  $v_{i,3d_i + 2}^h$, para cada $1 \le h \le 3$.
+		\item Cada v\'ertice $s_i$ lo conectamos con $s_{i+1}$ formando as\'i un ciclo que denotaremos por $S$.
+		\item Por cada $1 \le i \le n$ conectamos $x_i$ con $s_i$. 
 	\end{itemize}
 
 	Una vez definida la transformaci\'on del grafo $G$ que se da como entrada del problema original en el grafo $G'$ solo resta demostrar que $G$ es $3$ coloreable si y solo si $G'$ tiene un subgrafo regular de grado $3$.
+	
+	Primero supongamos que $G$ es $3$-coloreable y por tanto sea $\{V^1, V^2, V^3 \}$ la partici\'on de sus v\'ertices en tres conjuntos correspondientes a la $3$-coloraci\'on. Tomaremos $G''$ como el subgrafo inducido en $G'$ por los siguientes v\'ertices:
+	\begin{itemize}
+		\item Todos los v\'ertices $s_i$, para $1 \le i \le n$.
+		\item Todos los v\'ertices $x_i$, para $1 \le i \le n$.
+		\item Todos los v\'ertices $a_i^h$, para $1 \le i \le m $ y $1 \le h \le 3$.
+		\item Por cada v\'ertice $v_i \in V_j$, a\~nadimos todos los v\'ertices en $C_i^j$, para $j \in \{1,2,3\}$.
+	\end{itemize}
+
+	Demostremos que $G''$ contiene solo v\'ertices de grado $0$ o $3$, por lo que luego de eliminar los v\'ertices de grado $0$ tendremos el grafo c\'ubico buscado. Es f\'acil ver que todos los v\'ertices $s_i$ tienen grado $3$. Para cada v\'ertice $x_i$ notemos que este est\'a conectado a $s_i$ y adem\'as a exactamente a uno de los siguientes pares de v\'ertices: $(v_{i,3d_i + 1}^1, v_{i,3d_i + 2}^1), (v_{i,3d_i + 1}^2, v_{i,3d_i + 2}^2), (v_{i,3d_i + 1}^3, v_{i,3d_i + 2}^3)$, ya que solo los v\'ertices en uno de esos pares pertenecer\'a a $G''$, en dependencia de a qu\'e conjunto de $V_1, V_2, V_3$ pertenezca $v_i$. 
+	
+	Sea $v_{xy}^k$ un v\'ertice arbitrario de $G''$ (con la forma descrita). N\'otese que para cada v\'ertice $v_i \in V_h$, todos los v\'ertices $v_{ij}^h$ pertenecen $G''$ y entonces el ciclo $C_{i}^h$ est\'a en $G''$. Por tanto, el v\'ertice $v_{xy}^k \in V(G'')$ tendr\'a arista en $G''$ con sus dos adyacentes en el ciclo $C_x^k$. Adem\'as, como $v_{xy}^k$ estaba conectado en $G'$ con exactamente un v\'ertice de la forma $a_{\rho_p}^k$, para alg\'un $1 \le p \le d_x$, y cada v\'ertice de esta forma pertenece a $G''$, tenemos que $v_{xy}^k$ tiene al menos grado $3$. Sin embargo, $v_{xy}^k$ ten\'ia exactamente grado $3$ en $G'$, por lo que concluimos que este tiene grado $3$ en $G''$ tambi\'en.
+	
+	Ahora tomemos un v\'ertice $a_i^h$ cualquiera (con la forma descrita), supongamos que $e_i = \edge{v_x, v_y}$ (donde el \'indice de $e_i$ fue tomado de igual forma que en la definici\'on de $a_i^h$). N\'otese que $a_i^h$ est\'a en $G'$ conectado a los $3$ v\'ertices $v_{x3j}^h, v_{x3j + 1}^h$ y $v_{x3j + 2}^h$ para alg\'un $1 \le j \le d_x$, y a los $3$ v\'ertices $v_{y3k}^h, v_{y3k + 1}^h$ y $v_{x3k + 2}^h$ para alg\'un $1 \le k \le d_y$. Sin embargo, como $v_x$ y $v_y$ son adyacentes, entonces estos est\'an en conjuntos de  $\{V_1,V_2, V_3\}$ diferentes. Por tanto, a lo sumo uno de los ciclos $C_x^h$ y $C_y^h$ estar\'a en $G''$ de donde tenemos que $a_i^h$ tendr\'a o bien grado $3$, o $0$. Por tanto podemos concluir que $G'$ tiene un subgrafo c\'ubico.
+	
+	Ahora supongamos que $G'$ tiene un subgrafo c\'ubico $G''$ y demostremos que $G$ es $3$-coloreable. Para ello construiremos los conjuntos $V_k := \{v_i \mid v_{ij}^k \in V(G'')\textbf{ para alg\'un $j$} \}$, para $k = 1,2,3$, y demostraremos que estos conforman una partici\'on de $V$. Adem\'as, tendr\'iamos que demostrar que no existen aristas entre v\'ertices en un mismo conjunto $V_k$.
+	
+	Denotemos por $V'' := V(G'')$. Empecemos por notar que si $v_{i,j}^h \in V''$, entonces $C_i^h$ est\'a en $G''$. Esto se debe a que $v_{i,j}^h$ tiene solamente un adyacente fuera de $C_i^k$ en $G'$. Supongamos que el v\'ertice $a_i^h$ est\'a en $G''$. Sean $v_x$ y $v_y$ los v\'ertices que  $e_i$ conectaba en $G$. Si $a_i^h$ tuviera adyacentes en $G''$ tanto en $C_x^h$ como en $C_y^h$, entonces por lo expuesto anteriormente ambos ciclos estar\'ian en $G''$ y el grado de $a_i^h$ ser\'ia $6$, lo cual es absurdo. Entonces si $a_i^h \in V''$ entonces exactamente uno de los ciclos $C_x^h$ o $C_y^h$ est\'a en $G''$. Analizando en el otro sentido, si el ciclo $C_x^h$ est\'a en $G''$, entonces para cada arista $e_{\rho_i}$ incidente en $v_x$ en $G$, tenemos que para que el nodo $v_{x,3i}^h$ tenga grado $3$ en $G''$, el v\'ertice $a_{\rho_i}^h$ debe estar en $V''$. Por tanto, podemos concluir que no existen en $G$ aristas entre v\'ertices de un mismo conjunto $V_k$.
+	
+	Ahora veamos que si $C_i^h \in G''$ entonces $v_{i,3d_i + 1}^h \in V''$ y para que su grado sea $3$, debe pasar que $x_i \in V''$. Ahora si $x_i \in V''$, como este v\'ertice es adyacente en $G'$ solamente a $s_i$ y a dos v\'ertices en cada ciclo $C_i^h$, entonces tenemos que $s_i \in V''$ es la \'unica forma de que $\deg_{G''}(x_i)$ sea impar. Adem\'as, en ese caso exactamente uno de los ciclos $C_i^1, C_i^2$ y $C_i^3$ estar\'a en $G''$. Es f\'acil ver adem\'as que si $s_i \in V''$ para alg\'un $i$, entonces $s_i, x_i \in V''$ para todo $1 \le i \le n$, dado que $s_i$ tiene en $G'$ exactamente un adyacente fuera de $S$, que es $x_i$, y dos en $S$.
+	
+	Hemos demostrado que si un v\'ertice $x$ cualquiera pertenece a $G''$, entonces $x_i$ y  $s_i$ pertenecen a $V''$ para todo $1 \le i \le n$. Adem\'as, si $x_i \in V''$, entonces $C_i^h \in G''$ para exactamente un valor de $h$.  Por tanto, podemos concluir que $\{V_1, V_2, V_3\}$ es una partici\'on de $V$. 
+
+	
 	
 \end{myproof}
 
