@@ -1,0 +1,419 @@
+\documentclass[10pt]{amsart}
+
+% Package Being Used:
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{psfrag}
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=magenta, urlcolor=wine}
+\usepackage{url}
+\usepackage{algpseudocode}
+\usepackage{fancyhdr}
+\usepackage{mathtools}
+\usepackage{tikz-cd}
+\usepackage{xy}
+\input xy
+\xyoption{all}
+\usepackage{stmaryrd}
+\usepackage{calrsfs}
+
+% Paper Format and Geometry:
+
+\voffset=-1.4mm
+\oddsidemargin=14pt
+\evensidemargin=14pt
+\topmargin=26pt
+\headheight=9pt     
+\textheight=576pt
+\textwidth=441pt %441
+\parskip=0pt plus 4pt
+
+% Head Labels:
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[CE]{\fontsize{9}{11}\selectfont L. RODR\'IGUEZ Y  M. M. TIRADOR }
+\fancyhead[CO]{\fontsize{9}{11}\selectfont EL BAR}
+\fancyhead[LE,RO]{\thepage}
+
+\setlength{\headheight}{9pt}
+
+% Theorems-like Format and Numbering:
+
+\newtheorem*{maintheorem*}{Main Theorem}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{prop}[theorem]{Proposici\'on}
+\newtheorem{conj}[theorem]{Conjecture}
+\newtheorem{lem}[theorem]{Lema}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{teo}[theorem]{Teorema}
+
+\theoremstyle{definition}
+\newtheorem{defn}[theorem]{Definition}
+\newtheorem{rem}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{sol}[theorem]{Soluci\'on}
+\newtheorem{prob}[theorem]{Problema}
+%\newtheorem{prob}[theorem]{Problem}
+\newtheorem{question}[theorem]{Question}
+\numberwithin{equation}{section}
+\newcommand{\lqqd}{{\small $\blacksquare$}}
+\newenvironment{myproof} {\paragraph{\emph{Demostraci\'on:}}}{\hfill$\square$}
+\newcommand{\Proof}[2]{{\vspace{1em} $\emph{Demostración:}$ \textbf{#1} #2 \lqqd \vspace{1em}}}
+
+% Personalized Commands:
+\newcommand{\cc}{\mathbb{C}}
+\newcommand{\ff}{\mathbb{F}}
+\newcommand{\nn}{\mathbb{N}}
+\newcommand{\pp}{\mathbb{P}}
+\newcommand{\ppp}{\mathcal{P}}
+\newcommand{\qq}{\mathbb{Q}}
+\newcommand{\rr}{\mathbb{R}}
+\newcommand{\zz}{\mathbb{Z}}
+
+\newcommand{\ch}{\text{char}}
+\newcommand{\lcm}{\text{lcm}}
+\providecommand\ldb{\llbracket}
+\providecommand\rdb{\rrbracket}
+\newcommand\pval{\mathsf{v}_p}
+\newcommand{\gp}{\text{gp}}
+\newcommand{\qf}{\text{qf}}
+\newcommand{\supp}{\textsf{supp}}
+\newcommand{\ii}{\mathcal{Irr}}
+\newcommand{\uu}{\mathcal{U}}
+\newcommand{\ppf}{\mathcal{P}_{\text{fin}}}
+\newcommand{\ppx}{\mathcal{P}_{\text{fin}, 0}} 
+%\newcommand{\ppx}{\mathcal{P}_{\emph{fin}, \times}} % Do not use this notation
+\newcommand{\inter}{\mathsf{int}}
+\newcommand{\cone}{\mathsf{cone}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\newcommand{\edge}[1]{\langle #1\rangle}
+\newcommand{\at}{\mathcal{A}}
+\newcommand{\lf}{\lfoloor}
+\newcommand{\fl}[1]{\lfloor#1\rfloor}
+\newcommand{\cl}[1]{\lceil #1\rceil}
+\newcommand{\ds}{\displaystyle}
+
+\usepackage{todonotes}
+
+% \keywords{Minkowski sum, power monoid, Puiseux monoid, atomicity, factorization theory}
+
+%\subjclass[2010]{Primary: 13C05, 13A15, 13C13; Secondary: 13A15}
+
+\begin{document}
+	
+	\mbox{}
+	\title{El viaje}
+	
+	\author{Marcos M. Tirador}
+	\address{Facultad de Matem\'atica y Computaci\'on \\ Universidad de La Habana \\ Ciudad de La Habana \\ Cuba}
+	\email{marcosmath44@gmail.com}
+	
+	
+	\author{Leandro Rodr\'iguez Llosa}
+	\address{Facultad de Matem\'atica y Computaci\'on \\ Universidad de La Habana \\ Ciudad de La Habana \\ Cuba}
+	\email{leandro\_driguez@outlook.com}
+		
+
+\date{\today}
+
+%\begin{abstract}
+%	TODO...
+%\end{abstract}
+
+\bigskip
+\maketitle
+
+
+\bigskip
+%%%%%%%%%%%%
+%%%%%%%%%%%%
+%\setlanguage{spanish}
+\section{Preliminares}
+Se define un grafo no dirigido $G$ como un par $(V,E)$ de conjuntos tales que el segundo es una relaci\'on ($E\subseteq V \times V$) anti-reflexiva y asim\'etrica definida sobre el primero. A los elementos de $V$ se les suele llamar v\'ertices o nodos y a los elementos de $E$ aristas. Adem\'as usaremos la notaci\'on $V(G)$ y $V(E)$ para referirnos respectivamente al conjunto de v\'ertices y al conjunto de aristas  de un grafo $G$ dado; aunque en caso de que no haya ambig\"uedad usaremos simplemente $V$ y $E$. Sea $(x,y)$ un elemento de $E$, usaremos tambi\'en la notaci\'on $\langle x,y \rangle$ para referirnos al mismo.
+
+Decimos que la tupla $(G,w)$ es un grafo $G$ es ponderado si $w\colon E \rightarrow \rr$ es una funci\'on que asigna a cada arista un valor real, conocido como peso o costo. A la funci\'on $w$ se le llama funci\'on de ponderaci\'on. 
+
+Definimos un camino sobre un grafo $G$ como una tupla de la forma $p = \langle v_0,v_1, \dots v_k \rangle$ donde $v_i \in V$ y $\langle x_{i-1},x_i \rangle \in E$ para todo $1\leq i \leq k$. En este caso decimos que el camino $p$ conecta a $v_0$ y $v_k$. Definimos la longitud de un camino como la cantidad de aristas en el mismo. Alternativamente se usar\'a la notaci\'on $x \rightsquigarrow y$ para referirnos a un camino que comienza en $x$ y termina en $y$, e $x \rightarrow y$ para referirnos a una arista de $x$ a $y$ que es parte de un camino cualquiera que contiene a $x$ inmediatamente antes de $y$. Definimos adem\'as la distancia entre dos nodos como la longitud del camino de menor longitud que conecta a dichos nodos.
+
+En un grafo ponderado definimos la longitud de un camino como la suma de los pesos de las aristas que este contiene. Dado el camino $p$ definido anteriormente, definimos la longitud de $p$ como $\sum_{i = 1}^k w(\edge{v_{i - 1}, v_i})$. An\'alogamente definimos la distancia entre dos v\'ertices como la longitud del camino de menor longitud que los conecta.
+
+\todo{Agregar a preliminares lo relacionado con NP y la definici\'on de grafo c\'ubico}
+
+\section{Enunciado del Problema}
+	\begin{prob}
+		\textbf{La venganza de Alejandra}
+		
+		Por algún motivo, a Alejandra no le gustaba la paz y le irritaba que sus compañeros de aula se llevaran tan bien. Ella quería ver el mundo arder. Un día un demonio se le acercó y le propuso un trato: "A cambio de un cachito de tu alma, te voy a dar el poder para romper relaciones de amistad de tus compañeros, con la única condición de que no puedes romperlas todas". Sin pensarlo mucho (Qué más da un pequeño trocito de alma), Alejandra aceptó y se puso a trabajar. Ella conocía, dados sus k compañeros de aula, quiénes eran mutuamente amigos.
+		
+		Como no podía eliminar todas las relaciones de amistad, pensó en qué era lo siguiente que podía hacer más daño. Si una persona quedaba con uno o dos amigos, podría hacer proyectos en parejas o tríos (casi todos los de la carrera son así), pero si tenía exactamente tres amigos, cuando llegara un proyecto de tres personas, uno de sus amigos debería quedar afuera y se formaría el caos.
+		
+		Ayude a Alejandra a saber si puede sembrar la discordia en su aula eliminando relaciones de amistad entre sus compañeros de forma que todos queden, o bien sin amigos, o con exactamente tres amigos.
+	\end{prob}	
+
+\begin{teo}
+	El problema de reconocer si un grafo tiene alg\'un subgrafo c\'ubico es NP-completo.
+\end{teo}
+
+\begin{myproof}
+	Primero es f\'acil ver que el problema es NP dado que si nos dan un subgrafo del grafo original, pordemos f\'acilmente comprobar si es o no c\'ubico, en tiempo polinomial, solamente comprobando los grados de todos los v\'ertices.
+	
+	Ahora para demostrar que el problema de decisi\'on en cuesti\'on es NP completo reduciremos el problema de $3$-coloraci\'on a nuestro problema. Sea $G = (V,E)$ un grafo que se recibe como entrada al problema de $3$-coloraci\'on. Del mismo queremos determinar si sus v\'ertices se pueden dividir en $3$ conjuntos disjuntos tal que no existen aristas entre los v\'ertices de un mismo conjunto. Para proceder a demostrar que este problema se puede reducir al problema de tener determinar si un grafo posee subgrafos c\'ubicos, transformemos la entrada $G$ del problema original en otra entrada $G'$ para el segundo problema. 
+	
+	Denotemos $d_i = \deg(v_i)$ por cada nodo $v_i \in V$. El conjunto $V'$ estar\'a formado de la siguiente forma:
+	\begin{itemize}
+		\item Por cada $v_i \in V$ a\~nadimos el v\'ertice $v_{ij}^h$ en $V'$, para cada $1 \le j \le 3d_i + 2$ y $1 \le h \le 3$.
+		\item Por cada arista $e_i \in E$ tendremos los  v\'ertices $a_i^h$ en $V'$, para cada $1 \le h \le 3$.
+		\item Por cada v\'ertice $v_i \in V$ tendremos otro v\'ertice $x_i \in V'$.
+		\item $n$ v\'ertices especiales $s_i$.
+	\end{itemize}
+
+	El conjunto de aristas $E'$ estar\'a definido como sigue:
+	\begin{itemize}
+		\item Por cada $1 \le i \le n$ tendremos una arista entre los v\'ertices $v_{ij}^h$ y $v_{ij+1}^h$ (donde se toma el segundo sub\'indice m\'odulo $3d_i + 2$), para cada $1 \le h \le 3$. Como podemos ver se formar\'an as\'i $3n$ ciclos de tama\~no $3d_i + 2$ a los que denotaremos por $C_i^h$.
+		\item Sean $e_{\rho_1}, e_{\rho_2}, \dots , e_{\rho_{d_i}}$ las aristas incidentes en el nodo $v_i$,  entonces por cada  $1 \le h \le 3$ conectaremos los nodos $v_{i,3j}^h$, $v_{i,3j + 1}^h$ y $v_{i,3j + 2}^h$ con el nodo  $a_{\rho_j}^h$, para cada $1 \le j \le d_i$.
+		\item Por cada v\'ertice $v_i \in V$ conectamos el v\'ertice $x_i \in V'$, con $v_{i,3d_i + 1}^h$ y  $v_{i,3d_i + 2}^h$, para cada $1 \le h \le 3$.
+		\item Cada v\'ertice $s_i$ lo conectamos con $s_{i+1}$ formando as\'i un ciclo que denotaremos por $S$.
+		\item Por cada $1 \le i \le n$ conectamos $x_i$ con $s_i$. 
+	\end{itemize}
+
+	Una vez definida la transformaci\'on del grafo $G$ que se da como entrada del problema original en el grafo $G'$ solo resta demostrar que $G$ es $3$ coloreable si y solo si $G'$ tiene un subgrafo regular de grado $3$.
+	
+	Primero supongamos que $G$ es $3$-coloreable y por tanto sea $\{V^1, V^2, V^3 \}$ la partici\'on de sus v\'ertices en tres conjuntos correspondientes a la $3$-coloraci\'on. Tomaremos $G''$ como el subgrafo inducido en $G'$ por los siguientes v\'ertices:
+	\begin{itemize}
+		\item Todos los v\'ertices $s_i$, para $1 \le i \le n$.
+		\item Todos los v\'ertices $x_i$, para $1 \le i \le n$.
+		\item Todos los v\'ertices $a_i^h$, para $1 \le i \le m $ y $1 \le h \le 3$.
+		\item Por cada v\'ertice $v_i \in V_j$, a\~nadimos todos los v\'ertices en $C_i^j$, para $j \in \{1,2,3\}$.
+	\end{itemize}
+
+	Demostremos que $G''$ contiene solo v\'ertices de grado $0$ o $3$, por lo que luego de eliminar los v\'ertices de grado $0$ tendremos el grafo c\'ubico buscado. Es f\'acil ver que todos los v\'ertices $s_i$ tienen grado $3$. Para cada v\'ertice $x_i$ notemos que este est\'a conectado a $s_i$ y adem\'as a exactamente a uno de los siguientes pares de v\'ertices: $(v_{i,3d_i + 1}^1, v_{i,3d_i + 2}^1), (v_{i,3d_i + 1}^2, v_{i,3d_i + 2}^2), (v_{i,3d_i + 1}^3, v_{i,3d_i + 2}^3)$, ya que solo los v\'ertices en uno de esos pares pertenecer\'a a $G''$, en dependencia de a qu\'e conjunto de $V_1, V_2, V_3$ pertenezca $v_i$. 
+	
+	Sea $v_{xy}^k$ un v\'ertice arbitrario de $G''$ (con la forma descrita). N\'otese que para cada v\'ertice $v_i \in V_h$, todos los v\'ertices $v_{ij}^h$ pertenecen $G''$ y entonces el ciclo $C_{i}^h$ est\'a en $G''$. Por tanto, el v\'ertice $v_{xy}^k \in V(G'')$ tendr\'a arista en $G''$ con sus dos adyacentes en el ciclo $C_x^k$. Adem\'as, como $v_{xy}^k$ estaba conectado en $G'$ con exactamente un v\'ertice de la forma $a_{\rho_p}^k$, para alg\'un $1 \le p \le d_x$, y cada v\'ertice de esta forma pertenece a $G''$, tenemos que $v_{xy}^k$ tiene al menos grado $3$. Sin embargo, $v_{xy}^k$ ten\'ia exactamente grado $3$ en $G'$, por lo que concluimos que este tiene grado $3$ en $G''$ tambi\'en.
+	
+	Ahora tomemos un v\'ertice $a_i^h$ cualquiera (con la forma descrita), supongamos que $e_i = \edge{v_x, v_y}$ (donde el \'indice de $e_i$ fue tomado de igual forma que en la definici\'on de $a_i^h$). N\'otese que $a_i^h$ est\'a en $G'$ conectado a los $3$ v\'ertices $v_{x3j}^h, v_{x3j + 1}^h$ y $v_{x3j + 2}^h$ para alg\'un $1 \le j \le d_x$, y a los $3$ v\'ertices $v_{y3k}^h, v_{y3k + 1}^h$ y $v_{x3k + 2}^h$ para alg\'un $1 \le k \le d_y$. Sin embargo, como $v_x$ y $v_y$ son adyacentes, entonces estos est\'an en conjuntos de  $\{V_1,V_2, V_3\}$ diferentes. Por tanto, a lo sumo uno de los ciclos $C_x^h$ y $C_y^h$ estar\'a en $G''$ de donde tenemos que $a_i^h$ tendr\'a o bien grado $3$, o $0$. Por tanto podemos concluir que $G'$ tiene un subgrafo c\'ubico.
+	
+	Ahora supongamos que $G'$ tiene un subgrafo c\'ubico $G''$ y demostremos que $G$ es $3$-coloreable. Para ello construiremos los conjuntos $V_k := \{v_i \mid v_{ij}^k \in V(G'')\textbf{ para alg\'un $j$} \}$, para $k = 1,2,3$, y demostraremos que estos conforman una partici\'on de $V$. Adem\'as, tendr\'iamos que demostrar que no existen aristas entre v\'ertices en un mismo conjunto $V_k$.
+	
+	Denotemos por $V'' := V(G'')$. Empecemos por notar que si $v_{i,j}^h \in V''$, entonces $C_i^h$ est\'a en $G''$. Esto se debe a que $v_{i,j}^h$ tiene solamente un adyacente fuera de $C_i^k$ en $G'$. Supongamos que el v\'ertice $a_i^h$ est\'a en $G''$. Sean $v_x$ y $v_y$ los v\'ertices que  $e_i$ conectaba en $G$. Si $a_i^h$ tuviera adyacentes en $G''$ tanto en $C_x^h$ como en $C_y^h$, entonces por lo expuesto anteriormente ambos ciclos estar\'ian en $G''$ y el grado de $a_i^h$ ser\'ia $6$, lo cual es absurdo. Entonces si $a_i^h \in V''$ entonces exactamente uno de los ciclos $C_x^h$ o $C_y^h$ est\'a en $G''$. Analizando en el otro sentido, si el ciclo $C_x^h$ est\'a en $G''$, entonces para cada arista $e_{\rho_i}$ incidente en $v_x$ en $G$, tenemos que para que el nodo $v_{x,3i}^h$ tenga grado $3$ en $G''$, el v\'ertice $a_{\rho_i}^h$ debe estar en $V''$. Por tanto, podemos concluir que no existen en $G$ aristas entre v\'ertices de un mismo conjunto $V_k$.
+	
+	Ahora veamos que si $C_i^h \in G''$ entonces $v_{i,3d_i + 1}^h \in V''$ y para que su grado sea $3$, debe pasar que $x_i \in V''$. Ahora si $x_i \in V''$, como este v\'ertice es adyacente en $G'$ solamente a $s_i$ y a dos v\'ertices en cada ciclo $C_i^h$, entonces tenemos que $s_i \in V''$ es la \'unica forma de que $\deg_{G''}(x_i)$ sea impar. Adem\'as, en ese caso exactamente uno de los ciclos $C_i^1, C_i^2$ y $C_i^3$ estar\'a en $G''$. Es f\'acil ver adem\'as que si $s_i \in V''$ para alg\'un $i$, entonces $s_i, x_i \in V''$ para todo $1 \le i \le n$, dado que $s_i$ tiene en $G'$ exactamente un adyacente fuera de $S$, que es $x_i$, y dos en $S$.
+	
+	Hemos demostrado que si un v\'ertice $x$ cualquiera pertenece a $G''$, entonces $x_i$ y  $s_i$ pertenecen a $V''$ para todo $1 \le i \le n$. Adem\'as, si $x_i \in V''$, entonces $C_i^h \in G''$ para exactamente un valor de $h$.  Por tanto, podemos concluir que $\{V_1, V_2, V_3\}$ es una partici\'on de $V$. 
+
+	
+	
+\end{myproof}
+
+
+%	\begin{prob}
+%		Se tiene un grafo no dirigido y ponderado, con funci\'on de ponderaci\'on $w$, de $n$ nodos y $m$ aristas. Se tiene un conjunto $Q$ conformado por $q$ tuplas de la forma $(u,v,l)$, donde $u$ y $v$ son nodos del grafo, y $l$ es un entero no negativo. Se dice que un camino entre $u$ y $v$ de longitud $l$ es \'util si la tupla $(u,v,l') \in Q$ para alg\'un $l' \ge l$. Una arista $e$ es \'util si pertenece a alg\'un camino \'util. Encuentre el n\'umero de aristas \'utiles del grafo.
+%	\end{prob}
+%
+%\section{Soluci\'on Propuesta}
+%	
+%	\begin{sol}\label{sol_optima_travel} Sea $d$ la funci\'on que determina la longitud de los caminos de costo m\'inimo entre cada par de v\'ertices del grafo. La misma puede ser hallada usando el conocido algoritmo de Floyd-Warshall, o haciendo el algoritmo de Dijkstra desde cada nodo. Luego para cada arista $\edge{x,y}$ del grafo, si existe en $Q$ una tupla $(u,v,l)$ tal que
+%	\begin{align}\label{condition}
+%		d(u,x) + d(y,v) + w \left(\edge{x, y} \right) \le l,
+%	\end{align}
+%	entonces dicha arista puede ser contada como \'util. Para determinar esto podemos para cada arista comprobar cada una de las tuplas de $Q$. En caso de que ninguna satisfaga la desigualdad \eqref{condition}, dicha arista no ser\'a \'util.
+%	\end{sol}
+%
+%\textbf{Complejidad temporal:}
+%
+% La complejidad temporal de la soluci\'on es $O\left(mq + \min\big(\min(q,n) m\log(m), n^3\big) \right)$. El sumando $mq$ sale del hecho de que debemos comprobar para cada arista, cada una de las tuplas de $Q$ en la condici\'on \eqref{condition}. El otro sumando es el costo de calcular la funci\'on $d$. En caso de que $m \log(m) = O(n^3)$ podemos usar la variante de hacer Dijktsra desde cada nodo, de donde sale la complejidad $O(nm\log(m))$ dado que son $n$ nodos y la complejidad de Dijkstra es $O(m\log(m))$ (remplazamos el factor $n$ por $\min(n, q)$, dado que solo nos interesan los caminos de longitud m\'inima partiendo de los nodos que aparecen en algunas de las $q$ tuplas). En otro caso podemos usar Floyd-Warshall que tiene una complejidad total de $O(n^3)$.
+%
+%
+%\textbf{Complejidad espacial:}
+%	La complejidad espacial est\'a determinada por el costo de almacenar la funci\'on $d$, el cual es $O(n^2)$, m\'as el costo de almacenar las tuplas y el grafo en s\'i que es $O(n + m + q)$. Por tanto la complejidad final es $O(n^2 + q)$ (siempre pueden eliminarse ciertas tuplas innecesarias de modo que siempre sea $O(n^2)$).
+%
+%\begin{prop}
+%	La Soluci\'on \ref{sol_optima_travel} es correcta.
+%\end{prop}
+%	\Proof{}{
+%		Comencemos por observar que si una arista $(x,y)$ satisface la desigualdad \eqref{condition} para alguna tupla $(u,v,l) \in Q$, entonces dicha arista es \'util. Esto se puede ver f\'acilmente del hecho de que el camino $u\rightsquigarrow x \rightarrow y\rightsquigarrow v$ tiene longitud $d(u,x) + d(y,v) + w\big( \edge{x,y} \big)$. Por tanto a partir de la desigualdad \eqref{condition} dicho camino es \'util para la tupla $(u,v,l)$ y as\'i la arista $(x,y)$ es \'util. 
+%		
+%		Supongamos ahora que existe una arista $\edge{x, y}$ que es \'util pero que no fue encontrada por el algoritmo. Sea $(u, v, l)$ la tupla que hace \'util a dicha arista. Por tanto, existe un camino $p := u \rightsquigarrow x \rightarrow y \rightsquigarrow v$ tal que la longitud del mismo es a lo sumo $l$. Sea $w_1$ la longitud del fragmento de $p$ que va de $u$ a $x$ y $w_2$ la longitud del fragmento de $p$ que va de $y$ a $v$. Por definici\'on de $d$, se cumple que $d(u,x) \le w_1$ y $d(y, v) \le w_2$. Entonces $d(u,x) + w(\edge{x, y}) + d(y , v) \le w_1 + w(\edge{x,y}) + w_2 = |p| \le l$. Por tanto la arista $\edge{x, y}$ satisface la desigualdad \eqref{condition} para la tupla $(u,v,l)$, lo cual contradice que el algoritmo no la encontr\'o. Podemos concluir que una arista es \'util si y solo si la soluci\'on propuesta la encuentra.
+%		
+%	}
+%
+%\section{Enunciado del Problema}
+%	
+%	\begin{prob}
+%		
+%		En un bar se controla la entrada de personas diaria durante una cantidad determinada de días. En lo adelante, la administración del bar se refiere a la cantidad de personas que entran, en relación a la media durante ese período, por ejemplo si un día entran $5$ personas más que la media calculada se registra como $5$, si entran $10$ personas menos que la media ya calculada se registra $-10$. Esta media no se actualiza. 
+%		
+%		La administración del bar tiene un registro de la asistencia durante $n$ días consecutivos, que ha sido registrada de la forma antes mencionada, y se ha visto que la asistencia al bar en la segunda mitad analizada fue la misma cada día.
+%		
+%		El dueño del bar va a hacerle una auditoría a la administración para saber si todo marcha bien. La auditor\'ia se lleva a cabo de la siguiente forma: El administrador le dirá un número $k$, y el dueño 
+%		obtendr\'a la suma de las $n - k + 1$ posibles secuencias de $k$ d\'ias consecutivos. Esto es, para todo $i$ entre $1$ y $n - k + 1$, obtendr\'a la suma:
+%		
+%		$$a_i + a_{i+1} + ... + a_{i+k-1}. $$
+%		
+%		Por ejemplo si se registr\'o como asistencia $[-1, 0, 1, 2, 2]$ (n\'otese que los dos \'ultimos elementos conforman la segunda mitad, tomando parte entera por debajo, y son todos iguales), para $k = 3$, el dueño tendrá como suma los números $0$, $3$ y $5$.
+%		
+%		Si todas las sumas obtenidas resultan positivas con respecto a la media anterior el dueño concluir\'a que el bar marcha bien, de lo contrario, despide al administrador.
+%		
+%		El administrador lo contrata a usted para que lo ayude, como científico que se considera, a determinar qu\'e  valor de $k$ debe elegir el administrador para que el due\~no del bar no lo despida.
+%	\end{prob}
+%
+%	\begin{prob}
+%		Se tiene una lista de $n$ n\'umeros enteros $a_1, a_2, \dots, a_n$. Se desea saber si existe un $1 \le k \le n$ tal que la suma
+%		\[ a_i + a_{i + 1} + \dots + a_{i + k - 1}\]
+%		es positiva para todo $1\le i\le n - k + 1$.
+%	\end{prob}
+%
+%	\section{Soluci\'on Inocente}
+%
+%	Como podemos ver, una vez formulado el problema, podemos encontrar una soluci\'on simplemente explorando todos el espacio de b\'usqueda. Veremos a continuaci\'on dicha soluci\'on.
+%	
+%	\begin{sol}\label{navy_sol}
+%		Podemos tomar cada entero positivo $1 \le k \le n$ y comprobar si existe un subarray de tama\~no $k$ del array dado con suma no positiva, teniendo en caso contrario que $k$ es soluci\'on. Si $k$ no es soluci\'on para ning\'un valor entre $1$ y $n$, entonces la soluci\'on no existe y damos $-1$ como resultado.
+%		
+%		Para un $k$ fijado, podemos comprobar si este es soluci\'on haciendo todas las posibles sumas de $k$ valores consecutivos del array dado.
+%	\end{sol}
+%
+%	\begin{prop}
+%		La soluci\'on dada en $\ref{navy_sol}$ es correcta.
+%	\end{prop}
+%
+%        \Proof{}{
+%        Esto se puede ver directamente del hecho de que exploramos todas las sumas posibles de $k$ valores consecutivos para cada valor de $k$ posible.		
+%	}
+%
+%	\textbf{Complejidad temporal:} La complejidad temporal de esta soluci\'on es $\Theta(n^3)$. Tenemos $n$ valores posibles de $k$ a explorar, y para cada uno de ellos tenemos $n - k + 1$ subarrays de tama\~no $k$. Por tanto la cantidad de operaciones es del orden de 
+%	\begin{align*}
+%		\sum_{k = 1}^n k(n - k + 1) &= \sum_{k = 1}^n kn - \sum_{k = 1}^n  (k^2 - k) = n^2(n + 1) / 2 - \sum_{k = 1}^n ( k^2 - k) 
+%		\\ &= n^2(n+1)/2 - n(n+1)(2n-1)/6 + n( n+ 1) / 2 
+%		\\ &= n^3(1/2 - 1/3) + n^2(1 - 1/6) + n(1/6 + 1/2) = \Theta(n^3).  
+%	\end{align*}
+%
+%
+%	Sin embargo nos podemos quitar el factor $k$ de acumular el array de tama\~no $k$ si precalculamos en $O(n)$ la suma del prefijo de tama\~no $i$, para cada $1\le i \le n$. En este caso la soluci\'on ser\'ia entonces $\Theta(n^2)$.
+%	
+%	\textbf{Complejidad espacial:} Necesitaremos a lo sumo $2$ arreglos de tama\~no $n$ y algunos otros valores enteros, lo cual no es m\'as que $O(n)$ en complejidad espacial.
+%	 
+%	\section{Soluci\'on Propuesta}
+%
+%		En esta secci\'on presentaremos una mejor soluci\'on del problema que la inocente. Adem\'as, demostraremos su correctitud y calcularemos su complejidad temporal. Finalmente demostraremos que es \'optima.
+%		
+%	\begin{sol}\label{sol_optima}
+%		Sea $a_1, a_2, \dots, a_n$ la lista dada. Si $a_n$ es no negativo, la soluci\'on es $n$ si $a_1 + \dots + a_n$ es positivo y $-1$ (no existe el $k$ buscado) en otro caso.
+%		
+%		Supongamos entonces que $a_n$ es negativo. Lo que hacemos es acumular para cada $1 \le i \le n$ el sufijo que comienza en $i$ de la lista dada, esto es $s_i := a_i + a_{i +1} + \dots + a_n$. Si $s_i$ es no positivo, descartamos como posibles valores de $k$, todos los n\'umeros entre $n - i + 1 - \min(\lfloor s_i/a_n \rfloor, \lfloor n/2 \rfloor)$ y $n - i + 1$. Luego si existe un $\lfloor n/2 \rfloor < k \le n$ que no haya sido descartado, este es la soluci\'on. En otro caso no existe la soluci\'on.
+%	\end{sol}
+%
+%	
+%	\begin{teo}
+%		La Soluci\'on \ref{sol_optima} es correcta. 
+%	\end{teo}
+%
+%        \Proof{}{
+%		Primero demostremos que si $k$ es soluci\'on, con $k \le \lfloor n/2 \rfloor $, entonces $2k$ tambi\'en. Supongamos por el contrario que existe un $1 \le i \le n - 2k + 1$ tal que $a_i + \dots + a_{i + 2k - 1} \le 0$. Entonces debe ocurrir que $a_i + \dots + a_{i + k - 1} \le 0$ o $a_{i + k} + \dots + a_{i + 2k - 1} \le 0$, ya que de lo contrario la suma entera fuera positiva. Sin embargo, ambas sumas est\'an compuestas por $k$ elementos consecutivos lo cual contradice que $k$ es soluci\'on. Por tanto si existe una soluci\'on entonces existe una tal que $k > \lfloor n/2 \rfloor$.
+%		
+%		Veamos que si $a_n \ge 0$ entonces existe una soluci\'on si y solo si $s_1 := a_1 + \dots + s_n > 0$. La implicaci\'on reversa es evidente. Supongamos entonces que existe una soluci\'on $k$. Entonces la suma $a_1 + a_2 + \dots + a_k > 0$. Dado que por el resultado anterior podemos asumir que $k > \lfloor n/2 \rfloor$, entonces $a_{k + 1} = a_{k + 2} = \dots = a_n \ge 0$. Por tanto $a_1 + a_2 + \dots + a_n = (a_1 + a_2 +\dots + a_k) + a_{k+1} + a_{k + 2} + \dots + a_n > 0 + (n - k)a_n \ge 0$, lo cual concluye nuestra demostraci\'on para este caso.
+%		
+%		Para el otro caso primero demostremos que si existe una $k > \lfloor n/2 \rfloor$ tal que $k$ no es soluci\'on, entonces $k$ fue descartado en la soluci\'on. Sea $i$ tal que $a_i + \dots + a_{i + k - 1} \le 0$. Veamos que
+%		\begin{align*}
+%%			-\lfloor s_i/a_n \rfloor \le 
+%			-s_i/a_n = -\frac{a_i + \dots + a_{i + k - 1} + a_{i + k} + \dots + a_n}{a_n} &\le - \frac{a_{i + k} + \dots + a_n}{a_n} \\ &= -\frac{(n - i - k + 1)a_n}{a_n}\\ &= (k + i - n - 1).
+%		\end{align*}
+%		Por tanto podemos ver que 
+%		\begin{align*}
+%		 l_i = \max( n - i + 1 - \lfloor s_i/a_n \rfloor, n - i  + 1 - \lfloor n/2 \rfloor) 
+%		 & = \max(n - i + 1 - s_i/a_n + \delta, n - i  + 1 - \lfloor n/2 \rfloor)
+%		 \\&\le \max(n- i + 1 + (k + i - n - 1) + \delta, \lfloor n/2 \rfloor + 1) \\ &= \max(k + \delta, \lfloor n/2 \rfloor + 1) < k + 1,
+%		\end{align*}
+%		donde $s_i/a_n = \lfloor s_i/a_n \rfloor + \delta$. Por otro lado $r_i = (n - i + 1)$, de donde obtenemos $l_i \le k \le r_i$. Podemos decir entonces que este valor de $k$ fue correctamente descartado.
+%		
+%		Solo resta demostrar que si existe un valor de $k > \lfloor n/2 \rfloor$ que es soluci\'on, entonces este valor no es descartado por el algoritmo. Supongamos por el contrario que existe un $i$ tal que $l_i \le k \le r_i$. Veamos primero  que $i + l_i = i + n - i  + 1 - \min( \lfloor s_i/a_n \rfloor, \lfloor n/2 \rfloor) \ge n + 1 - \lfloor n/2 \rfloor > \lfloor n/2 \rfloor$ y por tanto $a_{i + l_i} = a_{i + l_i + 1} = \dots = a_n < 0$.  Tenemos entonces que
+%		 \begin{align*}
+%		 a_i + a_{i + 1} + \dots + a_{ i + k - 1} =  s_i - (a_{i + k} + \dots + a_n) 
+%		 &\le s_i - (a_{i + l_i} + \dots + a_n) 
+%		 \\& = s_i - (n - l_i - i + 1 )a_n 
+%		 \\ & \le s_i - \big (n - i + 1- (n - i + 1 - \lfloor s_i / a_n \rfloor) \big)a_n
+%		 \\ & = s_i - \lfloor s_i / a_n \rfloor a_n 
+%		 \le 0, 
+%		 \end{align*}
+%	 
+%	de donde arribamos a una contradicci\'on, ya que existe un subarray de tama\~no $k$ de suma no positiva, pero $k$ era soluci\'on.
+% 		
+% 		
+% 		%		 \begin{align*}
+% 			%			 &~&s_i \le& 0 \\
+% 			%			&\Rightarrow& s_i + a_{i + k} + \dots a_n \le& 0 \\
+% 			%			&\Rightarrow& s_i + a_n(n - i + 1 - k) \le& 0 \\
+% 			%			&\Rightarrow& s_i \le& -a_n(n - i + 1 - k) \\
+% 			%			&\Rightarrow& s_i/a_n \ge& -(n - i + 1 - k) \\
+% 			%			&\Rightarrow& s_i/a_n \ge& (k + i - n - 1) \\
+% 			%		 \end{align*}
+% 		
+% 		
+% 	}
+% 		
+%		 \textbf{Complejidad temporal:}
+%		 
+%		 En el caso de que $a_n$ sea positivo solamente debemos acumular la lista, lo cual es $\Theta(n)$. En el otro caso, en cada iteraci\'on (cada valor de $i$ desde $1$ hasta $n - k + 1$) podemos hallar el valor de $s_i$ en $O(1)$ haciendo $s_{i} = s_{i - 1} - a_{i-1}$, donde $s_1$ se calcula en $\Theta(n)$ como en el caso anterior. 
+%		 
+%		 Sean $l_i$ y $r_i$ tales que en la iteraci\'on $i$ se determin\'o que debemos descartar como posibles valores de $k$ todos los enteros entre $l_i$ y $r_i$. Entonces creamos un array de tama\~no $n + 1$, inicialmente con todos los valores iguales a $0$. Luego por cada $i$, marcamos la posici\'on $l_i$ del array con valor $1$, y la posici\'on $r_i + 1$ con valor $-1$. Luego pasamos acumulando el array desde la posici\'on $\lfloor n/2\rfloor + 1$ hasta la $n$ y si en alg\'un momento la suma acumulada es $0$, entonces esa posici\'on corresponde a un valor que no fue descartado. Note que esto es similar al conocido \emph{factor de balance}. Adem\'as v\'ease que en cada iteraci\'on $i$, se hacen un n\'umero constante de operaciones, lo cual representa una complejidad total de $\Theta(n)$ y luego pasar por el array del factor de balance es $\Theta(n)$ tambi\'en. Finalmente la complejidad temporal del algoritmo es $\Theta(n)$.
+%		 
+%		 \textbf{Complejidad espacial:} Necesitaremos a lo sumo $3$ arreglos de tama\~no $n$ y algunos otros valores enteros, lo cual no es m\'as que $O(n)$ en complejidad espacial. 
+%		 
+%		 
+%		 \medskip
+%		 Como resultado final de nuestro trabajo veremos que no existe una soluci\'on mejor al problema estudiado.
+%		 
+%		 \begin{teo}
+%		 	La complejidad de la Soluci\'on \ref{sol_optima} es \'optima.
+%		 \end{teo}
+%		 
+%		 \Proof{}{
+%		 	Para esto demostramos que para cualquier algoritmo de soluci\'on del problema, se debe realizar al menos una operaci\'on (aunque sea de lectura) con cada uno de los primeros $\lceil n / 2 \rceil$ elementos. Suponga por el contrario que existe un algoritmo soluci\'on que ignora a alg\'un elemento de los primeros $\lceil n / 2 \rceil $ de la lista lista, o sea que puede dar una respuesta sin conocer el valor de una determinada posici\'on del array. Supongamos que la respuesta del algoritmo es $-1$ para una entrada determinada donde ignora el n\'umero en la posici\'on $i$. Esto significa que sin importar el valor de $a_i$ la soluci\'on seguir\'a siendo $-1$. Sin embargo, si $a_i > \big| \sum_{j \neq i} a_j \big|$, entonces $k = n$ es claramente una soluci\'on, lo cual es una contradicci\'on. Por tanto el algoritmo nunca podr\'a determinar cuando la soluci\'on es $-1$ sin analizar los primeros $ \lceil n/2 \rceil $ elementos del array, de donde cualquier algoritmo que resuelva el problema tiene complejidad $\Omega(n)$, y concluimos que la Soluci\'on \ref{sol_optima} es \'optima.
+%		 }
+%		 
+	
+\medskip
+%%%%%%%%%%%
+%%%%%%%%%%%
+%\section{Background}
+%\label{sec:background}
+
+
+
+
+%\newpage
+
+%\bigskip
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%\section{}
+
+
+
+
+
+\bigskip
+%%%%%%%%%%%%%%%
+%\begin{thebibliography}{20}
+	
+%	\bibitem{FT18} Y. Fan and S. Tringali: \emph{Power monoids: A bridge between factorization theory and arithmetic combinatorics}, J. Algebra \textbf{512} (2018) 252--294.
+
+	%	\bibitem{GGT19} A. Geroldinger, F. Gotti, and S. Tringali: \emph{On strongly primary monoids, with a focus on Puiseux monoids}, J. Algebra \textbf{567} (2021) 310--345. 
+
+%	\bibitem{GH06} A. Geroldinger and F. Halter-Koch: \emph{Non-unique Factorizations: Algebraic, Combinatorial and Analytic Theory}, Pure and Applied Mathematics Vol. 278, Chapman \& Hall/CRC, Boca Raton, 2006.
+
+	%	\bibitem{mR93} M. Roitman: \emph{Polynomial extensions of atomic domains}, J. Pure Appl. Algebra \textbf{87} (1993) 187--199.
+	
+%\end{thebibliography}
+
+
+\end{document}
+\@setaddresses
