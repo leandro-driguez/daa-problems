@@ -1,5 +1,6 @@
 
 import random
+from graph import Graph
 import numpy as np
 
 class Particle:
@@ -49,5 +50,13 @@ if __name__ == '__main__':
     w = 0.7
     c1 = 2
     c2 = 2
+
     best_position = pso(n_particles, n_epochs, search_space, w, c1, c2)
     print("Best position found:", best_position)
+    
+    l = 10*[1] + 20*[0]
+    random.shuffle(l)
+    print(l)
+    
+    # Graph.Generate(10)
+    
