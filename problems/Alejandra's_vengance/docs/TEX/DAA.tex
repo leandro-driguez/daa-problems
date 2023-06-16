@@ -40,7 +40,7 @@
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 \fancyhead[CE]{\fontsize{9}{11}\selectfont L. RODR\'IGUEZ Y  M. M. TIRADOR }
-\fancyhead[CO]{\fontsize{9}{11}\selectfont EL BAR}
+\fancyhead[CO]{\fontsize{9}{11}\selectfont LA VENGANZA DE ALEJANDRA}
 \fancyhead[LE,RO]{\thepage}
 
 \setlength{\headheight}{9pt}
@@ -138,18 +138,29 @@
 %%%%%%%%%%%%
 %\setlanguage{spanish}
 \section{Preliminares}
-Se define un grafo no dirigido $G$ como un par $(V,E)$ de conjuntos tales que el segundo es una relaci\'on ($E\subseteq V \times V$) anti-reflexiva y asim\'etrica definida sobre el primero. A los elementos de $V$ se les suele llamar v\'ertices o nodos y a los elementos de $E$ aristas. Adem\'as usaremos la notaci\'on $V(G)$ y $V(E)$ para referirnos respectivamente al conjunto de v\'ertices y al conjunto de aristas  de un grafo $G$ dado; aunque en caso de que no haya ambig\"uedad usaremos simplemente $V$ y $E$. Sea $(x,y)$ un elemento de $E$, usaremos tambi\'en la notaci\'on $\langle x,y \rangle$ para referirnos al mismo.
+Se define un grafo no dirigido $G$ como un par $(V,E)$ de conjuntos tales que el segundo es una relaci\'on ($E\subseteq V \times V$) anti-reflexiva y asim\'etrica definida sobre el primero. A los elementos de $V$ se les suele llamar v\'ertices o nodos y a los elementos de $E$ aristas. Adem\'as usaremos la notaci\'on $V(G)$ y $E(G)$ para referirnos respectivamente al conjunto de v\'ertices y al conjunto de aristas  de un grafo $G$ dado; aunque en caso de que no haya ambig\"uedad usaremos simplemente $V$ y $E$. Sea $(x,y)$ un elemento de $E$, usaremos tambi\'en la notaci\'on $\langle x,y \rangle$ para referirnos al mismo.
 
-Decimos que la tupla $(G,w)$ es un grafo $G$ es ponderado si $w\colon E \rightarrow \rr$ es una funci\'on que asigna a cada arista un valor real, conocido como peso o costo. A la funci\'on $w$ se le llama funci\'on de ponderaci\'on. 
+%Decimos que la tupla $(G,w)$ es un grafo $G$ es ponderado si $w\colon E \rightarrow \rr$ es una funci\'on que asigna a cada arista un valor real, conocido como peso o costo. A la funci\'on $w$ se le llama funci\'on de ponderaci\'on. 
 
-Definimos un camino sobre un grafo $G$ como una tupla de la forma $p = \langle v_0,v_1, \dots v_k \rangle$ donde $v_i \in V$ y $\langle x_{i-1},x_i \rangle \in E$ para todo $1\leq i \leq k$. En este caso decimos que el camino $p$ conecta a $v_0$ y $v_k$. Definimos la longitud de un camino como la cantidad de aristas en el mismo. Alternativamente se usar\'a la notaci\'on $x \rightsquigarrow y$ para referirnos a un camino que comienza en $x$ y termina en $y$, e $x \rightarrow y$ para referirnos a una arista de $x$ a $y$ que es parte de un camino cualquiera que contiene a $x$ inmediatamente antes de $y$. Definimos adem\'as la distancia entre dos nodos como la longitud del camino de menor longitud que conecta a dichos nodos.
+%Definimos un camino sobre un grafo $G$ como una tupla de la forma $p = \langle v_0,v_1, \dots v_k \rangle$ donde $v_i \in V$ y $\langle x_{i-1},x_i \rangle \in E$ para todo $1\leq i \leq k$. En este caso decimos que el camino $p$ conecta a $v_0$ y $v_k$. Definimos la longitud de un camino como la cantidad de aristas en el mismo. Alternativamente se usar\'a la notaci\'on $x \rightsquigarrow y$ para referirnos a un camino que comienza en $x$ y termina en $y$, e $x \rightarrow y$ para referirnos a una arista de $x$ a $y$ que es parte de un camino cualquiera que contiene a $x$ inmediatamente antes de $y$. Definimos adem\'as la distancia entre dos nodos como la longitud del camino de menor longitud que conecta a dichos nodos.
 
-En un grafo ponderado definimos la longitud de un camino como la suma de los pesos de las aristas que este contiene. Dado el camino $p$ definido anteriormente, definimos la longitud de $p$ como $\sum_{i = 1}^k w(\edge{v_{i - 1}, v_i})$. An\'alogamente definimos la distancia entre dos v\'ertices como la longitud del camino de menor longitud que los conecta.
+%En un grafo ponderado definimos la longitud de un camino como la suma de los pesos de las aristas que este contiene. Dado el camino $p$ definido anteriormente, definimos la longitud de $p$ como $\sum_{i = 1}^k w(\edge{v_{i - 1}, v_i})$. An\'alogamente definimos la distancia entre dos v\'ertices como la longitud del camino de menor longitud que los conecta.
 
-\todo{Agregar a preliminares lo relacionado con NP y la definici\'on de grafo c\'ubico}
+Dado un grafo $G = (V,E)$ se dice que $G' = (V', E')$ es un subgrafo  de $G$ si $V' \subset V$, $E' \subset E$ y todas las aristas en $E'$ inciden solo sobre elementos de $V'$.  En este caso escribimos $G' \le G$.
+
+Definimos el grado de un v\'ertice como la cantidad de aristas que inciden sobre este. Decimos que un grafo es regular si todos sus nodos tienen el mismo grado. Un grafo ser\'a entonces $k$-regular si todos sus nodos tienen grado $k$. A los grafos $k$-regulares con $k = 3$ tambi\'en suele llam\'arseles grafos c\'ubicos.
+
+
+Definimos un problema abstracto o simplemente problema como una relaci\'on binaria $Q$ sobre un conjunto de instancias del problema $I$ y un conjunto $S$ de soluciones del problema. Se dice que un problema es decisi\'on si $S = \{0, 1\}$.  Decimos que un problema es polinomial o pertenece a la clase de complejidad $\mathsf{P}$ si existe un algoritmo que con complejidad temporal polinomial (o dicho m\'as simple un algoritmo polinomial) puede encontrar para un elemento de $I$ un elemento de $S$ que est\'e relacionado con este. 
+
+Dado un problema de decisi\'on se define informalmente un certificado  como un camino que puede ser seguido para verificar si la respuesta del problema es que ``si'' o que ``no''. Decimos que un problema es $\mathsf{NP}$ si existe un algoritmo polinomial $A$ tal que para cada instancia del problema $x$ con soluci\'on $1$, existe un certificado $y$ que el algoritmo recibe como entrada junto con $x$ y tiene salida $1$, o sea $A(x,y) = 1$.
+
+Se dice que un problema $Q$ puede ser reducido a otro problema $Q'$ si cualquier instancia de $Q$ puede ser transformada en una instancia de $Q'$ tal que la soluci\'on de $Q'$ provea una soluci\'on para $Q$. Se dice que una reducci\'on  es polinomial si existe un algoritmo polinomial que tranforma cada instancia de $Q$ en una intancia de $Q'$. Se dice entonces que un problema $Q$ pertenece a la clase de complejidad $\mathsf{NP}$-duro si existe una reducci\'on polinomial de todo problema $\mathsf{NP}$ al problema $Q$ (en t\'erminos informales se dice que cualquier problema $\mathsf{NP}$ es cu\'ando m\'as tan dif\'icil como $Q$). Por \'ultimo se dice que un problema es $\mathsf{NP}$-completo si este es $\mathsf{NP}$ y $\mathsf{NP}$-duro. Es f\'acil ver que demostrar que un problema $\mathsf{NP}$-completo $Q'$ puede ser reducido a un problema  $Q$ es  suficiente para afirmar que $Q$ es $\mathsf{NP}$-duro, dado que cualquier problema $\mathsf{NP}$ puede ser reducido a $Q'$ en tiempo polinomial y luego este a $Q$.
+
+%\todo{Agregar a preliminares lo relacionado con NP y la definici\'on de grafo c\'ubico}
 
 \section{Enunciado del Problema}
-	\begin{prob}
+	\begin{prob} 
 		\textbf{La venganza de Alejandra}
 		
 		Por algún motivo, a Alejandra no le gustaba la paz y le irritaba que sus compañeros de aula se llevaran tan bien. Ella quería ver el mundo arder. Un día un demonio se le acercó y le propuso un trato: "A cambio de un cachito de tu alma, te voy a dar el poder para romper relaciones de amistad de tus compañeros, con la única condición de que no puedes romperlas todas". Sin pensarlo mucho (Qué más da un pequeño trocito de alma), Alejandra aceptó y se puso a trabajar. Ella conocía, dados sus k compañeros de aula, quiénes eran mutuamente amigos.
@@ -159,14 +170,40 @@ En un grafo ponderado definimos la longitud de un camino como la suma de los pes
 		Ayude a Alejandra a saber si puede sembrar la discordia en su aula eliminando relaciones de amistad entre sus compañeros de forma que todos queden, o bien sin amigos, o con exactamente tres amigos.
 	\end{prob}	
 
+	Podemos representar a los compa\~neros de Alejandra mediante un grafo no dirigido, donde las aristas indican las relaciones de amistad existentes. Como Alejandra quiere que cada persona termine siendo amigo de cero o tres personas, sin eliminar todas las relaciones, b\'asicamente Alejandra quiere obtener un subgrafo del grafo de amistad tal que todos sus nodos tengan grado $0$ o $3$, y haya al menos uno de grado $3$. Luego de retirar los nodos de grado $0$, podemos pensar en el problema de la siguiente forma.
+	
+	\begin{prob}\label{rephrased}
+		Dado un grafo no dirigido $G$ determinar si existe un subgrafo $G' \le G$ tal que $G'$ es c\'ubico.
+	\end{prob}
+
+\section{NP completitud}
+
+En esta secci\'on demostraremos que el Problema \ref{rephrased} es $\mathsf{NP}$-completo, al demostrar que es $\mathsf{NP}$ y que se puede reducir en tiempo polinomial el conocido problema de $3$-coloraci\'on al nuestro. Definamos primeramente el problema de $3$-coloraci\'on.
+
+	\begin{prob} \textbf{Problema de $3$-coloraci\'on}
+		
+		Dado un grafo no dirigido $G = (V,E)$ se quiere determinar si existe una partici\'on de $V$ de la forma $\{V_1, V_2, V_3\}$, tal que no existe $\edge{x,y} \in E$ tal que $x,y \in V_i$ para alg\'un $i \in \{1,2,3\}$.
+		
+	\end{prob}
+
+\begin{teo}
+	El problema de $3$-coloraci\'on es $\mathsf{NP}$-completo.
+\end{teo}
+
+\begin{myproof}
+	Ver \cite{3-color}. \todo{Insertar referencia}.
+\end{myproof}
+	
+	Ya estamos preparados para demostrar el resultado principal de esta secci\'on. Este esta basado en la demostraci\'on hecha en \cite{trsfrg}, en el ap\'endice titulado \emph{NP-completness}. 
+
 \begin{teo}
 	El problema de reconocer si un grafo tiene alg\'un subgrafo c\'ubico es NP-completo.
 \end{teo}
 
 \begin{myproof}
-	Primero es f\'acil ver que el problema es NP dado que si nos dan un subgrafo del grafo original, pordemos f\'acilmente comprobar si es o no c\'ubico, en tiempo polinomial, solamente comprobando los grados de todos los v\'ertices.
+	Primero es f\'acil ver que el problema es $\mathsf{NP}$ dado que podemos crear f\'acilmente un algoritmo que dado un subgrafo $G'$ del grafo original, compruebe en tiempo polinomial si este es c\'ubico, solamente comprobando los grados de todos los v\'ertices. Entonces para cada grafo $G$ que es una instancia del problema con soluci\'on afirmativa podemos tomar como certificado alg\'un subgrafo $G' \le G$ c\'ubico y el algoritmo descrito decidir\'a que la soluci\'on en este caso es afirmativa.
 	
-	Ahora para demostrar que el problema de decisi\'on en cuesti\'on es NP completo reduciremos el problema de $3$-coloraci\'on a nuestro problema. Sea $G = (V,E)$ un grafo que se recibe como entrada al problema de $3$-coloraci\'on. Del mismo queremos determinar si sus v\'ertices se pueden dividir en $3$ conjuntos disjuntos tal que no existen aristas entre los v\'ertices de un mismo conjunto. Para proceder a demostrar que este problema se puede reducir al problema de tener determinar si un grafo posee subgrafos c\'ubicos, transformemos la entrada $G$ del problema original en otra entrada $G'$ para el segundo problema. 
+	Ahora para demostrar que el problema de decisi\'on en cuesti\'on es $\mathsf{NP}$-completo reduciremos el problema de $3$-coloraci\'on a nuestro problema. Sea $G = (V,E)$ un grafo que se recibe como entrada al problema de $3$-coloraci\'on. Del mismo queremos determinar si sus v\'ertices se pueden dividir en $3$ conjuntos disjuntos tal que no existen aristas entre los v\'ertices de un mismo conjunto. Para proceder a demostrar que este problema se puede reducir al problema de tener determinar si un grafo posee subgrafos c\'ubicos, transformemos la entrada $G$ del problema original en otra entrada $G'$ para el segundo problema. 
 	
 	Denotemos $d_i = \deg(v_i)$ por cada nodo $v_i \in V$. El conjunto $V'$ estar\'a formado de la siguiente forma:
 	\begin{itemize}
@@ -402,8 +439,12 @@ En un grafo ponderado definimos la longitud de un camino como la suma de los pes
 
 \bigskip
 %%%%%%%%%%%%%%%
-%\begin{thebibliography}{20}
+\begin{thebibliography}{20}
 	
+	\bibitem{cormen} T. H. Cormen, C. E. Leiserson, R. L. Rivest y C. Stein: \emph{Introduction to Algorithms}. Third Edition.
+	
+	
+	\bibitem{trsfrg} V. Chv\'atal, H. Fleischner, J. Sheehan, C. Thomassen: \emph{Three-Regular Subgraphs of Four-Regular Graphs}. Journal of Graph Theory, Vol. 3 (1979) pp. 371 - 386.
 %	\bibitem{FT18} Y. Fan and S. Tringali: \emph{Power monoids: A bridge between factorization theory and arithmetic combinatorics}, J. Algebra \textbf{512} (2018) 252--294.
 
 	%	\bibitem{GGT19} A. Geroldinger, F. Gotti, and S. Tringali: \emph{On strongly primary monoids, with a focus on Puiseux monoids}, J. Algebra \textbf{567} (2021) 310--345. 
@@ -412,7 +453,7 @@ En un grafo ponderado definimos la longitud de un camino como la suma de los pes
 
 	%	\bibitem{mR93} M. Roitman: \emph{Polynomial extensions of atomic domains}, J. Pure Appl. Algebra \textbf{87} (1993) 187--199.
 	
-%\end{thebibliography}
+\end{thebibliography}
 
 
 \end{document}
