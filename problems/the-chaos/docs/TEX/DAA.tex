@@ -146,7 +146,7 @@ Se define un grafo no dirigido $G$ como un par $(V,E)$ de conjuntos tales que el
 
 %En un grafo ponderado definimos la longitud de un camino como la suma de los pesos de las aristas que este contiene. Dado el camino $p$ definido anteriormente, definimos la longitud de $p$ como $\sum_{i = 1}^k w(\edge{v_{i - 1}, v_i})$. An\'alogamente definimos la distancia entre dos v\'ertices como la longitud del camino de menor longitud que los conecta.
 
-Dado un grafo $G = (V,E)$ se dice que $G' = (V', E')$ es un subgrafo  de $G$ si $V' \subset V$, $E' \subset E$ y todas las aristas en $E'$ inciden solo sobre elementos de $V'$.  En este caso escribimos $G' \le G$.
+Dado un grafo $G = (V,E)$ se dice que $G' = (V', E')$ es un subgrafo  de $G$ si $V' \subset V$, $E' \subset E$ y todas las aristas en $E'$ inciden solo sobre elementos de $V'$.  En este caso escribimos $G' \le G$. Dado un subconjunto $X \subset V$ definimos el grafo inducido por $X$ en $G$ y lo denotamos por $G[X]$ al grafo $G' = (X, E')$, donde $E'$ consiste de todas las aristas en $E$ que no inciden sobre ning\'un v\'ertice en $V \setminus X$.
  
 Definimos el grado de un v\'ertice $v \in V(G)$ como la cantidad de aristas que inciden sobre este y escribimos $\deg_G(v)$ (o $\deg(v)$ cuando no haya ambigüedad). Decimos que un grafo es regular si todos sus nodos tienen el mismo grado. Un grafo ser\'a entonces $k$-regular si todos sus nodos tienen grado $k$. A los grafos $k$-regulares con $k = 3$ tambi\'en suele llam\'arseles grafos c\'ubicos.
 
@@ -159,7 +159,7 @@ Se dice que un problema $Q$ puede ser reducido a otro problema $Q'$ si cualquier
 
 %\todo{Agregar a preliminares lo relacionado con NP y la definici\'on de grafo c\'ubico}
 
-\section{Enunciado del Problema}
+\section{Introducción al Problema}
 	\begin{prob} 
 		\textbf{La venganza de Alejandra}
 		
@@ -249,7 +249,26 @@ En esta secci\'on demostraremos que el Problema \ref{rephrased} es $\mathsf{NP}$
 	
 	\section{Aproximaci\'on}
 	
-	Para  poder encontrar una soluci\'on aproximada de un problema de decisi\'on lo que podemos hacer es transformarlo en un problema de optimizaci\'on, cuya soluci\'on \'optima nos permita encontrar la soluci\'on del problema original. Para el caso del Problema \ref{rephrased} un 
+	Para  poder encontrar una soluci\'on aproximada de un problema de decisi\'on lo que podemos hacer es transformarlo en un problema de optimizaci\'on, cuya soluci\'on \'optima nos permita encontrar la soluci\'on del problema original. Para el caso del Problema \ref{rephrased} un posible problema de optimizaci\'on correspondiente ser\'ia el siguiente.
+	
+	\begin{prob} \label{bad_opt}
+		Dado un grafo no dirigido $G$, encuentre un subgrafo $G' \le G$, con al menos un v\'ertice de grado $3$, que maximice el n\'umero de nodos con grado $0$ o $3$.  
+	\end{prob}
+	
+	Sea $C^*$ la soluci\'on \'optima del problema para una instancia dada y sea $C$ una soluci\'on hayada por un algoritmo de aproximaci\'on. Se dice que el algoritmo es una $\rho(n)$-aproximaci\'on si 
+	\[
+		\max{ \left ( \frac{C}{C^*}, \frac{C^*}{C} \right )} \le \rho(n).
+	\]
+	
+	En el caso de un problema de maximizar es suficiente con $ C^*/C  \le \rho(n)$. 
+	
+	Sea $p_1$ la funci\'on de costo para el Problema \ref{bad_opt}. Construyamos una soluci\'on aproximada del problema. Notemos que en este problema para que haya al menos un nodo con grado $3$ en $G'$, tiene que haber al menos un nodo con grado mayor o igual que $3$ en $G$.  Sea $v$ este nodo, y $x_1, x_2$ y $x_3$ tres de sus adyacentes. Entonces si tomamos el subgrafo $G'$ inducido por $\{v, x_1, x_2, x_3\}$ tenemos que $p_1(G') \ge n - 3$. Por tanto si $G* \le G$ es tal que $p_1(G^*)$ es m\'aximo, tenemos que 
+	\[
+	\frac{C^*}{C} = \frac{p_1(G^*)}{p_1(G')} = \frac{p_1(G^*)}{n - 3} \le \frac{n}{n-3} = 1 + \frac{3}{n - 3}.
+	\]
+	Por tanto si tomamos $\rho(n) = 1 + 3/(n + 3)$, tenemos que esta soluci\'on es una $\rho(n)$-aproximaci\'on. Podemos observar que para $n \ge 6$ esta es una $2$-aproximaci\'on. En general para todo $k > 1$ existe $N \in \nn$ tal que para todo $n \ge N$ esta soluci\'on es una $k$-aproximaci\'on del \'optimo.
+	
+	
 	
 	
 \end{myproof}
