@@ -36,7 +36,7 @@ def k_regular(edges: List[Tuple[int, int]], k: int):
 
 def solve(edges: List[Tuple[int, int]], amount_nodes: int, k: int):
 
-    for v in range(2, amount_nodes + 1):
+    for v in range(4, amount_nodes + 1):
         for subgraph in combinations(edges, 3*v/2):
             if k_regular(subgraph, k):
                 return subgraph
