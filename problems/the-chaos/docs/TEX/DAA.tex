@@ -278,6 +278,27 @@ En esta secci\'on demostraremos que el Problema \ref{rephrased} es $\mathsf{NP}$
 
 	V\'ease que resolviendo este problema, para cada valor de $k$, podemos encontrar la soluci\'on del problema de decisi\'on \ref{rephrased}. Dado un grafo $G$, si para alg\'un valor de $k$ entre $1$ y $n$, el \'optimo del Problema \ref{best_appx} con entrada $G$ y $k$, es precisamente $k$, esto significa que $G$ tiene un subgrafo c\'ubico de $k$ nodos. En caso contrario, podemos afirmar que $G$ no contiene subgrafo c\'ubico.
 	
+	\subsection{Metaheurística}
+	
+	Dada la complejidad que tienen un problema de la clase NP-completo, se propone transformar 
+	el problema de decisión, a un problema de optimización (NP-duro) asociado a este. Una posible
+	propuesta sería que dado un \emph{k} fijo, se maximice el número de vértices con grado igual a 
+	3 de los \emph{k} antes prefijados, y los $(n-k)$ restantes se asume que tienen grado 0.
+	
+	\textbf{Enjambre de Partículas}
+	
+	Dada la dificultad que tiene explorar un espacio combinatorio discreto, se escoge esta 
+	metaheurística con el objetivo de probar distintas combinaciones de vértices $\binom{n}{k}$, e ir
+	explotando cada una de ellas colaborativamente, llevando un balance entre lo mejor encontrado 
+	en todo el enjambre, la mejor solución individual y la propia inercia del proceso de optimización
+	en cuestión.
+	
+	Esta búsqueda colaborativa permite la construcción de una nueva solución combinando lo mejor de 
+	cada subgrafo por independiente, e influyendo al enjambre para que intente llevar los mismos 
+	vértices a grado 3, lo cual podría provocar nuevos óptimos locales que pasarían a dirigir al resto.
+	
+	\subsection{k-aproximaci\'on}
+	
 	Veamos  un algoritmo polinomial que constituye una $4$-aproximaci\'on para el Problema \ref{best_appx}.
 	
 	\begin{algo} \label{alg1}
