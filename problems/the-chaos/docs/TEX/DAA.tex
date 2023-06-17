@@ -52,11 +52,12 @@
 \newtheorem{prop}[theorem]{Proposici\'on}
 \newtheorem{conj}[theorem]{Conjecture}
 \newtheorem{lem}[theorem]{Lema}
-\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{cor}[theorem]{Corolario}
 \newtheorem{teo}[theorem]{Teorema}
 
 \theoremstyle{definition}
 \newtheorem{defn}[theorem]{Definition}
+\newtheorem{algo}[theorem]{Algoritmo}
 \newtheorem{rem}[theorem]{Remark}
 \newtheorem{example}[theorem]{Example}
 \newtheorem{sol}[theorem]{Soluci\'on}
@@ -246,6 +247,7 @@ En esta secci\'on demostraremos que el Problema \ref{rephrased} es $\mathsf{NP}$
 	
 	Hemos demostrado que si un v\'ertice $v$ cualquiera pertenece a $G''$, entonces $x_i$ y  $s_i$ pertenecen a $V''$ para todo $1 \le i \le n$. Adem\'as, si $x_i \in V''$, entonces $C_i^h \in G''$ para exactamente un valor de $h$.  Por tanto, podemos concluir que $\{V^1, V^2, V^3\}$ es una partici\'on de $V$. 
 	
+\end{myproof}
 	
 	\section{Aproximaci\'on}
 	
@@ -268,10 +270,59 @@ En esta secci\'on demostraremos que el Problema \ref{rephrased} es $\mathsf{NP}$
 	\]
 	Por tanto si tomamos $\rho(n) = 1 + 3/(n + 3)$, tenemos que esta soluci\'on es una $\rho(n)$-aproximaci\'on. Podemos observar que para $n \ge 6$ esta es una $2$-aproximaci\'on. En general para todo $k > 1$ existe $N \in \nn$ tal que para todo $n \ge N$ esta soluci\'on es una $k$-aproximaci\'on del \'optimo.
 	
+	Veamos otra posible transformaci\'on en problema de optimizaci\'on. 
+	
+	\begin{prob} \label{best_appx}
+		Dado un grafo no dirigido $G$ y un entero positivos $1 \le k \le |V|$, encuentre el subgrafo $G' \le G$ de $k$ v\'ertices con el mayor n\'umero posible de nodos con grado $3$.
+	\end{prob}
+
+	V\'ease que resolviendo este problema, para cada valor de $k$, podemos encontrar la soluci\'on del problema de decisi\'on \ref{rephrased}. Dado un grafo $G$, si para alg\'un valor de $k$ entre $1$ y $n$, el \'optimo del Problema \ref{best_appx} con entrada $G$ y $k$, es precisamente $k$, esto significa que $G$ tiene un subgrafo c\'ubico de $k$ nodos. En caso contrario, podemos afirmar que $G$ no contiene subgrafo c\'ubico.
+	
+	Veamos  un algoritmo polinomial que constituye una $4$-aproximaci\'on para el Problema \ref{best_appx}.
+	
+	\begin{algo} \label{alg1}
+		Tomemos un grafo $G' = (V',E')$ y dos conjuntos de nodos $S$ y $T$ inicialmente vac\'ios. En cada momento en el algoritmo garantizamos que se cumplan las siguientes invariantes.
+		\begin{itemize}
+			\item[1.] $S$ y $T$ constituyen una partici\'on de $V'$.
+			\item[2.] Todos los nodos de $S$ tienen grado $3$ en $G'$.
+			\item[3.] $|V'| \le k$.
+		\end{itemize}
+		
+		 Decimos que un v\'ertice de $S$ no est\'a saturado si tiene al menos una arista con uno de $T$ en $G'$. En cada iteraci\'on del algoritmo tomamos el v\'ertice $v$ de menor grado de $V \setminus V'$ tal que su grado sea mayor o igual que $3$. Pueden darse $3$ casos:
+		 
+		\emph{Case 1:} $v$ tiene al menos $3$ adyacentes que no est\'an en $S$. En este caso a\~nadimos $v$ a $S$ y a tres de tales adyacentes a $T$ (si no estaban ya), y las $3$ aristas correspondientes a $E'$. 
+		
+		\emph{Case 2:} $v$ tiene a lo sumo $t < 3$ adyacentes que no est\'an en $S$, pero tiene al menos $3 - t$ adyacentes en $S$ que no est\'an saturados. En este caso, al igual que en el anterior a\~nadimos a $v$ a $S$, los mencionados $t$ adyacentes a $T$ y las respectivas aristas. Adem\'as tomaremos $3 - t$ de los adyacentes a $v$ en $S$ que no est\'an saturados, los conectamos con $v$ y eliminamos de cada uno una de sus aristas que van hacia nodos de $T$, las cuales sabemos que existen porque los nodos no est\'an saturados.
+		
+		\emph{Case 3:} En caso de que no ocurra ninguno de los casos anteriores tomamos el conjunto $X$ de todos los nodos de $V \setminus V'$ que no cumplan ni uno ni $2$, y a\~nadimos todos sus elementos a $T$. Luego eliminamos de $G$ todas las aristas que van de alg\'un nodo de $V - V'$ hacia alguno de los nodos saturados de $S$ que son adyacentes a alg\'un nodo de $X$ (esto se hace con el fin de obtener un nuevo orden de los nodos de $V - V'$).
+		
+		Repetimos entonces esta iteraci\'on del algoritmo hasta que se deje de cumplir la invariante $3$, en cuyo caso devolvemos el estado de $G'$ antes de hacer la \'ultima iteraci\'on.
+	\end{algo}
+	
+	Es f\'acil ver que en cada iteraci\'on del algoritmo se mantienen las $3$ invariantes definidas en el mismo. 
+	
+	\begin{teo}
+		La complejidad temporal del algoritmo es $O(kn^2)$.	
+	\end{teo}
+
+	\begin{myproof}
+		En cada iteraci\'on del algoritmo aumenta en al menos $1$ el tama\~no de $V'$, por lo tanto este hace $k$ iteraciones a lo sumo. Los casos $1$ y $2$ en una iteraci\'on se ejecutan en tiempo $O(n)$, dado que hay que explorar a lo sumo todos los adyacentes de un nodo, que son cuando m\'as $n-1$. En el caso $3$ tenemos que explorar todos los nodos que quedan en $V - V'$ y por cada uno, pasar por todos sus adyacentes para ver si no se cumplen $1$ o $2$, por lo que en este caso la complejidad de una iteraci\'on es $O(n^2)$ (la complejidad de la ordenaci\'on es entonces despreciable). Por tanto en el caso peor nuestro algoritmo hace $O(kn^2)$ iteraciones.
+	\end{myproof}
+	
+	\begin{cor}
+		la soluci\'on aproximada \ref{alg1} es polinomial.
+	\end{cor}
+	
+	\begin{teo}
+		La soluci\'on \ref{alg1} es una $5$-aproximaci\'on.
+	\end{teo}
+
+	\begin{myproof}
+		Sean $X_1, X_2, \dots, X_t$ los conjuntos de nodos a\~nadidos a $T$ despu\'es de cada iteraci\'on del algoritmo que pas\'o por el caso $3$ y sea $Y_i$, con $1 \le i \le t$ el conjunto de nodosde $S$ que eran adyacentes a alg\'un nodo de $X$ y que estaban saturados en el momento que se a\~nadi\'o $X$ a $T$. Como luego de ser a\~nadido $X_i$ a $T$ se eliminan todas las aristas de $Y_i$ a $V \setminus V'$, entonces los conjuntos $Y_i$ son todos disjuntos dos a dos. Adem\'as en el momento que se adiciona $X_i$ a $T$, se cumple que el n\'umero de aristas que va de $X_i$ a $Y_i$ es menor que $d - 2$ donde $d$ es  el menor grado de alg\'un v\'ertice de $X_i$. Sin embargo el n\'umero de aristas que van de $Y_i$ a $X_i$ es mayor que $d' - 3$, donde $d'$ es mayor grado de alg\'un v\'ertice de $Y_i$. Sin embargo como en todo momento tomamos los v\'ertices en orden creciente de su grado, tenemos que $d \ge d'$. Se $e$ el n\'umero de aristas entre $Y_i$ y $X_i$, tenemos entonces que  $|X_i|(d - 2) \le e \le  |Y_i|(d' - 3) \le |Y_i|(d' - 2) \le |Y_i| (d - 2)$, de donde tenemos que $|X_i| \le |Y_i|$. Por tanto $X^* := \sum_{i = 0}^t |X_i| \le \sum_{i = 0}^t |Y_i| \le |S|$. Finalmente en cada iteraci\'on que cae en el caso $1$ o $2$, se cumple que se agregan a $T$ a lo sumo $3$ nodos por cada nodo que se agrega a $S$. Por tanto tenemos finalmente que $|V'| = |T| + |S| = |S| + |X^*| + |T\setminus X^*|  \le |S| + |S| + 3|S| = 5 |S|$, de donde se cumple lo pedido. 
+ 	\end{myproof} 
 	
 	
-	
-\end{myproof}
+%\end{myproof}
 
 
 %	\begin{prob}
