@@ -409,3 +409,5 @@ dmypy.json
 proof.py
 
 problems\problems\the-chaos\docs\TEX
+*.tex
+problems/the-chaos/docs/TEX/DAA.pdf
